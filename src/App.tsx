@@ -7,20 +7,36 @@ import {
   VStack,
   Code,
   Grid,
-  theme,
+  extendTheme,
 } from "@chakra-ui/react"
 import { ColorModeSwitcher } from "./ColorModeSwitcher"
 import { Logo } from "./Logo"
+import CustomFooter from "./components/common/Footer"
+import CustomNav from "./components/common/NavBar"
+
+
+
+
+const colors = {
+  brand: {
+    900: '#1a365d',
+    800: '#153e75',
+    700: '#2a69ac',
+  },
+}
+
+const theme = extendTheme({ colors })
 
 export const App = () => (
   <ChakraProvider theme={theme}>
     <Box textAlign="center" fontSize="xl">
+      <CustomNav></CustomNav>
       <Grid minH="100vh" p={3}>
         <ColorModeSwitcher justifySelf="flex-end" />
         <VStack spacing={8}>
           <Logo h="40vmin" pointerEvents="none" />
           <Text>
-            Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
+            Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.dd
           </Text>
           <Link
             color="teal.500"
@@ -34,5 +50,6 @@ export const App = () => (
         </VStack>
       </Grid>
     </Box>
+    <CustomFooter></CustomFooter>
   </ChakraProvider>
 )
