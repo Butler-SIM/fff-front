@@ -13,7 +13,8 @@ import {
   } from "@chakra-ui/react";
   import { useBreakpointValue } from "@chakra-ui/react";
   import { useState } from "react";
-  
+  import { Link as ChakraLink, LinkProps } from "@chakra-ui/react";
+  import { Link as ReactRouterLink } from "react-router-dom";
   type DataItem = {
     title: string;
     comment: number;
@@ -41,7 +42,10 @@ import {
           <Thead>
             {dataList.map((item) => (
               <Tr>
-                  <Th>{item.title}</Th>
+                  <Th><ChakraLink as={ReactRouterLink} to="/board/detail/:boardId">
+                  {item.title}
+              </ChakraLink></Th>
+                  
                   <Th isNumeric>{item.comment}</Th>
               </Tr>
             ))}
@@ -51,7 +55,7 @@ import {
     );
   }
   
-  export default function BoardList() {
+  export default function Main() {
     const displayFlex = useBreakpointValue({ base: "block", md: "flex" });
   
     return (

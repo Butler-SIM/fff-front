@@ -26,7 +26,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const Links = ["Das2hboard", "Projects", "Team"];
+const Links = ["베스트", "자유", "익명", "커뮤니티", "놀이터", "기타"];
 
 const NavLink = (props: Props) => {
   const { children } = props;
@@ -64,20 +64,34 @@ export default function CustomNav() {
           />
           <HStack spacing={300} alignItems={"center"}>
             <Box>
-            <ChakraLink as={ReactRouterLink} to="/">
+              <ChakraLink as={ReactRouterLink} to="/">
                 UcoPia
               </ChakraLink>
             </Box>
             <HStack
               as={"nav"}
-              spacing={4}
+              spacing={15}
               display={{ base: "none", md: "flex" }}
+              ml={30}
+              fontSize={17}
             >
-              {Links.map((link) => (
-                <NavLink key={"/board/BoardList"}>{link}</NavLink>
-              ))}
               <ChakraLink as={ReactRouterLink} to="/board/BoardList">
-                Home
+                베스트
+              </ChakraLink>
+              <ChakraLink as={ReactRouterLink} to="/board/BoardList">
+                자유
+              </ChakraLink>
+              <ChakraLink as={ReactRouterLink} to="/board/BoardList">
+                익명
+              </ChakraLink>
+              <ChakraLink as={ReactRouterLink} to="/board/BoardList">
+                커뮤니티
+              </ChakraLink>
+              <ChakraLink as={ReactRouterLink} to="/board/BoardList">
+                놀이터
+              </ChakraLink>
+              <ChakraLink as={ReactRouterLink} to="/board/BoardList">
+                기타
               </ChakraLink>
             </HStack>
           </HStack>
