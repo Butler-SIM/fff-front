@@ -87,7 +87,7 @@ export default function CustomNav() {
               <ChakraLink as={ReactRouterLink} to="/board/BoardList">
                 커뮤니티
               </ChakraLink>
-              <ChakraLink as={ReactRouterLink} to="/board/BoardList">
+              <ChakraLink as={ReactRouterLink} to="/lotto">
                 놀이터
               </ChakraLink>
               <ChakraLink as={ReactRouterLink} to="/board/BoardList">

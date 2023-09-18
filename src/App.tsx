@@ -8,6 +8,7 @@ import { BrowserRouter, Router, Route, Routes } from "react-router-dom";
 import MainLayout from "./components/common/layout/MainLayOut";
 import BoardList from "./components/board/BoardList";
 import BoardDetail from './components/board/BoardDetail';
+import LotteryBox from "./components/playground/LotteryBox";
 
 const colors = {
   brand: {
@@ -37,6 +38,8 @@ export const App = () => (
           <Route path="/board/BoardList" element={<BoardList />} />
           {/* 게시판 상세 */}
           <Route path="/board/detail/:boardId" element={<BoardDetail />} />
+          {/* 놀이터 */}
+          <Route path="/lotto" element={<LotteryBox />} />
         </Routes>
 
         {/* 기타 컴포넌트들 */}
