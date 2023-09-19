@@ -1,26 +1,16 @@
 "use client";
 
+import { ChatIcon } from "@chakra-ui/icons";
 import {
   Box,
-  chakra,
-  Container,
-  Stack,
-  Text,
-  Image,
-  Flex,
-  VStack,
   Button,
-  Heading,
-  SimpleGrid,
-  StackDivider,
-  useColorModeValue,
-  VisuallyHidden,
-  List,
-  ListItem,
+  Container,
+  Image,
+  Text,
   Textarea,
+  useColorModeValue,
 } from "@chakra-ui/react";
-import { ChatIcon } from "@chakra-ui/icons";
-import { MdLocalShipping } from "react-icons/md";
+import { BoardListData } from "./BoardList";
 
 const TextArea = () => {
   return (
@@ -46,11 +36,7 @@ export default function BoardDetail() {
           mt={150}
         >
           {/* Title */}
-          <Box
-            height="40px"
-            fontSize={23}
-            fontWeight={"900"}
-          >
+          <Box height="40px" fontSize={23} fontWeight={"900"}>
             제목제목
           </Box>
           <Box
@@ -130,12 +116,11 @@ export default function BoardDetail() {
                 >
                   댓글 작성자 닉네임
                 </Box>
-                <Box mt={4} ml={3}
-                >
+                <Box mt={4} ml={3}>
                   댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용댓글내용
                 </Box>
               </Box>
-              <Box height={80} mt={15} >
+              <Box height={80} mt={15}>
                 <TextArea></TextArea>
                 <Box
                   height="50px"
@@ -147,6 +132,15 @@ export default function BoardDetail() {
                 </Box>
               </Box>
             </Box>
+          </Box>
+          <Box
+            mt={150}
+            mb={20}
+            alignItems="center"
+            justifyContent="center"
+            border="1px "
+          >
+            <BoardListData></BoardListData>
           </Box>
         </Box>
       </Container>

@@ -61,7 +61,6 @@ import {
     return (
       <Container maxW={"5xl"}>
         <Box
-          width={{ base: "100%", md: "1200px" }}
           display={displayFlex}
           mt={35}
           alignItems="center"
@@ -71,7 +70,6 @@ import {
          <MainLayout title={"유머"}></MainLayout>
         </Box>
         <Box
-          width={{ base: "100%", md: "1200px" }}
           display={displayFlex}
           mt={35}
           alignItems="center"
@@ -81,7 +79,6 @@ import {
          <MainLayout title={"코인판"}></MainLayout>
         </Box>
         <Box
-          width={{ base: "100%", md: "1200px" }}
           display={displayFlex}
           mt={35}
           alignItems="center"
@@ -91,7 +88,6 @@ import {
          <MainLayout title={"주식/해외주식"}></MainLayout>
         </Box>
         <Box
-          width={{ base: "100%", md: "1200px" }}
           display={displayFlex}
           mt={35}
           mb={20}

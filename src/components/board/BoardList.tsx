@@ -23,7 +23,7 @@ type DataItem = {
   comment: number;
 };
 
-function BoardListData(props: any) {
+export function BoardListData(props: any) {
   const [dataList, setDataList] = useState<DataItem[]>([
     { title: "t1adfadsfda", comment: 1 },
     { title: "taadsfadsf2", comment: 2 },
@@ -38,24 +38,21 @@ function BoardListData(props: any) {
   ]);
 
   return (
-    <Box width={{ base: "100%", md: "1200px" }}>
+    <Box>
       <Box
         bg={useColorModeValue("gray.100", "gray.900")}
-        width={useBreakpointValue({ base: "385px", md: "800px" })}
       >
         {props.title ? props.title : ""}
-        65t
       </Box>
 
       <Table
         variant="simple"
-        width={useBreakpointValue({ base: "385px", md: "800px" })}
         fontSize={useBreakpointValue({ base: "10px", md: "13px" })}
         mt={20}
       >
         <Thead>
           <Tr>
-            <Th width={useBreakpointValue({ base: "130px", md: "550px" })}>
+            <Th width={useBreakpointValue({ base: "180px", md: "550px" })}>
               제목
             </Th>
             <Th width={useBreakpointValue({ base: "10px", md: "100px" })}>
@@ -126,7 +123,6 @@ export default function Main() {
   return (
     <Container maxW={"5xl"}>
       <Box
-        width={{ base: "100%", md: "1200px" }}
         mt={150}
         mb={20}
         alignItems="center"
