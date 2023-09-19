@@ -87,6 +87,7 @@ export default class LotteryBox extends React.Component<
                 id="btn"
                 className={this.state.effect ? "hide" : ""}
                 onClick={this.randomize}
+                mt={25}
               >
                 번호 뽑기!
               </Button>
