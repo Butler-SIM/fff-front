@@ -3,7 +3,7 @@
 import React from "react";
 import LotteryItem from "./LotteryItem";
 import { LotteryBoxProps, LotteryBoxState } from "./lotto";
-import { Flex, Box, Container, Button } from "@chakra-ui/react";
+import { Flex, Box, Container, Button, Text } from "@chakra-ui/react";
 
 const numbers = Array.from(Array(45), (_, i) => i + 1);
 
@@ -14,7 +14,7 @@ export default class LotteryBox extends React.Component<
   constructor(props: LotteryBoxProps) {
     super(props);
     this.state = {
-      number: [0, 0, 0, 0, 0, 0, 0],
+      number: [0, 0, 0, 0, 0, 0],
       effect: false,
     };
   }
@@ -42,45 +42,37 @@ export default class LotteryBox extends React.Component<
 
   render() {
     return (
+      
       <Container maxW={"5xl"}>
           <Box width={"100%"} height={"800px"} mt={200}>
-            <div id="numbers">
-              <LotteryItem
-                index="0"
-                color="blue ball"
-                number={this.state.number[0]}
-                decrypting={this.state.effect}
-              />
-              <LotteryItem
-                index="1"
-                color="blue ball"
-                number={this.state.number[1]}
-                decrypting={this.state.effect}
-              />
-              <LotteryItem
-                index="2"
-                color="blue ball"
-                number={this.state.number[2]}
-                decrypting={this.state.effect}
-              />
-              <LotteryItem
-                index="3"
-                color="red ball"
-                number={this.state.number[3]}
-                decrypting={this.state.effect}
-              />
-              <LotteryItem
-                index="4"
-                color="red ball"
-                number={this.state.number[4]}
-                decrypting={this.state.effect}
-              />
-              <LotteryItem
-                index="5"
-                color="grey ball"
-                number={this.state.number[5]}
-                decrypting={this.state.effect}
-              />
+          <Text mb={50} fontSize={40} fontWeight={800}>로또 번호 생성기</Text>
+          <div id="numbers">
+          {this.state.number.sort((a,b)=>a-b).map((num,index)=>{
+                let color;
+                if(num >=1 && num <=10){
+                  color = "yellow ball"
+                } else if(num >=11 && num <=20){
+                  color = "blue ball"
+                } else if(num >=21 && num <=30){
+                  color = "red ball"
+                } else if(num >=31 && num <=40){
+                  color = "grey ball"
+                } else if(num >=41 && num <=45){
+                  color = "green ball"
+                } else {
+                  color = "grey ball"
+                }
+                
+               return (
+                 <LotteryItem
+                   key={index}
+                   index={index.toString()}
+                   color={color}
+                   number={num}
+                   decrypting={this.state.effect}
+                 />
+               )
+              })}
             </div>
             <div>
               <Button
@@ -92,6 +84,7 @@ export default class LotteryBox extends React.Component<
                 번호 뽑기!
               </Button>
             </div>
+            
           </Box>
       </Container>
     );
