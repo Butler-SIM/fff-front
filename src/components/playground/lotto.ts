@@ -4,7 +4,9 @@ export interface LotteryBoxProps {}
 
 export interface LotteryBoxState {
     number: number[];
+    excludedNumbers: any;
     effect: boolean;
+    isExcludeModalOpen: boolean;
 }
 
 export interface LotteryItemProps {
