@@ -35,7 +35,7 @@ export const App = () => (
           {/* 메인 페이지 */}
           <Route path="/" element={<MainLayout />} />
           {/* 게시판 목록 */}
-          <Route path="/board/BoardList" element={<BoardList />} />
+          <Route path="/board-list" element={<BoardList />} />
           {/* 게시판 상세 */}
           <Route path="/board/detail/:boardId" element={<BoardDetail />} />
           {/* 놀이터 */}

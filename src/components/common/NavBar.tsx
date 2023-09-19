@@ -23,17 +23,15 @@ import { Link as ChakraLink, LinkProps } from "@chakra-ui/react";
 import { ColorModeSwitcher } from "../../ColorModeSwitcher";
 
 interface Props {
-  children: React.ReactNode;
+  link: String;
 }
 
 const Links = ["베스트", "자유", "익명", "커뮤니티", "놀이터", "기타"];
 
-const NavLink = (props: Props) => {
-  const { children } = props;
-
+const NavLink = (props: any) => {
   return (
-    <Box
-      as="a"
+    <ChakraLink
+      as={ReactRouterLink}
       px={2}
       py={1}
       rounded={"md"}
@@ -41,10 +39,10 @@ const NavLink = (props: Props) => {
         textDecoration: "none",
         bg: useColorModeValue("gray.200", "gray.700"),
       }}
-      href={"#"}
+      to={props.link}
     >
-      {children}
-    </Box>
+      {props.name}
+    </ChakraLink>
   );
 };
 
@@ -75,24 +73,12 @@ export default function CustomNav() {
               ml={30}
               fontSize={17}
             >
-              <ChakraLink as={ReactRouterLink} to="/board/BoardList">
-                베스트
-              </ChakraLink>
-              <ChakraLink as={ReactRouterLink} to="/board/BoardList">
-                자유
-              </ChakraLink>
-              <ChakraLink as={ReactRouterLink} to="/board/BoardList">
-                익명
-              </ChakraLink>
-              <ChakraLink as={ReactRouterLink} to="/board/BoardList">
-                커뮤니티
-              </ChakraLink>
-              <ChakraLink as={ReactRouterLink} to="/lotto">
-                놀이터
-              </ChakraLink>
-              <ChakraLink as={ReactRouterLink} to="/board/BoardList">
-                기타
-              </ChakraLink>
+              <NavLink name={"베스트"} link={"/board-list"}></NavLink>
+              <NavLink name={"자유"} link={"dd"}></NavLink>
+              <NavLink name={"익명"} link={"dd"}></NavLink>
+              <NavLink name={"커뮤니티"} link={"dd"}></NavLink>
+              <NavLink name={"놀이터"} link={"/lotto"}></NavLink>
+              <NavLink name={"기타"} link={"dd"}></NavLink>
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
@@ -125,9 +111,12 @@ export default function CustomNav() {
         {isOpen ? (
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
+            <NavLink name={"베스트"} link={"/board-list"}></NavLink>
+              <NavLink name={"자유"} link={"dd"}></NavLink>
+              <NavLink name={"익명"} link={"dd"}></NavLink>
+              <NavLink name={"커뮤니티"} link={"dd"}></NavLink>
+              <NavLink name={"놀이터"} link={"/lotto"}></NavLink>
+              <NavLink name={"기타"} link={"dd"}></NavLink>
             </Stack>
           </Box>
         ) : null}
