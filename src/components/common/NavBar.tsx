@@ -21,12 +21,11 @@ import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { Link as ChakraLink, LinkProps } from "@chakra-ui/react";
 import { ColorModeSwitcher } from "../../ColorModeSwitcher";
+import { useAuth } from "./Auth/AuthContext";
 
 interface Props {
   link: String;
 }
-
-const Links = ["베스트", "자유", "익명", "커뮤니티", "놀이터", "기타"];
 
 const NavLink = (props: any) => {
   return (
@@ -48,6 +47,7 @@ const NavLink = (props: any) => {
 
 export default function CustomNav() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const auth = useAuth();
 
   return (
     <>
@@ -83,35 +83,49 @@ export default function CustomNav() {
           </HStack>
           <Flex alignItems={"center"}>
             <ColorModeSwitcher></ColorModeSwitcher>
-            <Menu>
-              <MenuButton
-                as={Button}
-                rounded={"full"}
-                variant={"link"}
-                cursor={"pointer"}
-                minW={0}
+
+            {!auth.isLoggedIn ? ( // Not logged in
+              
+              <Button
+                as={"a"}
+                fontSize={"sm"}
+                fontWeight={400}
               >
-                <Avatar
-                  size={"sm"}
-                  src={
-                    "https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-                  }
-                />
-              </MenuButton>
-              <MenuList>
-                <MenuItem>Link 1</MenuItem>
-                <MenuItem>Link 2</MenuItem>
-                <MenuDivider />
-                <MenuItem>Link 3</MenuItem>
-              </MenuList>
-            </Menu>
+                <ChakraLink as={ReactRouterLink} to="/login">로그인</ChakraLink>
+              </Button>
+              
+            ) : (
+              // Logged in
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  rounded={"full"}
+                  variant={"link"}
+                  cursor={"pointer"}
+                  minW={0}
+                >
+                  <Avatar
+                    size={"sm"}
+                    src={
+                      "https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
+                    }
+                  />
+                </MenuButton>
+                <MenuList>
+                  <MenuItem>Link 1</MenuItem>
+                  <MenuItem>Link 2</MenuItem>
+                  <MenuDivider />
+                  <MenuItem>Link 3</MenuItem>
+                </MenuList>
+              </Menu>
+            )}
           </Flex>
         </Flex>
 
         {isOpen ? (
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4}>
-            <NavLink name={"베스트"} link={"/board-list"}></NavLink>
+              <NavLink name={"베스트"} link={"/board-list"}></NavLink>
               <NavLink name={"자유"} link={"dd"}></NavLink>
               <NavLink name={"익명"} link={"dd"}></NavLink>
               <NavLink name={"커뮤니티"} link={"dd"}></NavLink>

@@ -7,8 +7,10 @@ import CustomNav from "./components/common/NavBar";
 import { BrowserRouter, Router, Route, Routes } from "react-router-dom";
 import MainLayout from "./components/common/layout/MainLayOut";
 import BoardList from "./components/board/BoardList";
-import BoardDetail from './components/board/BoardDetail';
+import BoardDetail from "./components/board/BoardDetail";
 import LotteryBox from "./components/playground/LotteryBox";
+import { AuthProvider } from "./components/common/Auth/AuthContext";
+import LoginComponent from "./components/user/Login";
 
 const colors = {
   brand: {
@@ -29,22 +31,25 @@ const theme = extendTheme({
 export const App = () => (
   <BrowserRouter>
     <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <CustomNav></CustomNav>
-        <Routes>
-          {/* 메인 페이지 */}
-          <Route path="/" element={<MainLayout />} />
-          {/* 게시판 목록 */}
-          <Route path="/board-list" element={<BoardList />} />
-          {/* 게시판 상세 */}
-          <Route path="/board/detail/:boardId" element={<BoardDetail />} />
-          {/* 놀이터 */}
-          <Route path="/lotto" element={<LotteryBox />} />
-        </Routes>
+      <AuthProvider>
+        <Box textAlign="center" fontSize="xl">
+          <CustomNav></CustomNav>
+          <Routes>
+            {/* 메인 페이지 */}
+            <Route path="/" element={<MainLayout />} />
+            {/* 게시판 목록 */}
+            <Route path="/board-list" element={<BoardList />} />
+            {/* 게시판 상세 */}
+            <Route path="/board/detail/:boardId" element={<BoardDetail />} />
+            {/* 놀이터 */}
+            <Route path="/lotto" element={<LotteryBox />} />
+            {/* 로그인 */}
+            <Route path="/login" element={<LoginComponent />} />
+          </Routes>
 
-        {/* 기타 컴포넌트들 */}
-      </Box>
-
+          {/* 기타 컴포넌트들 */}
+        </Box>
+      </AuthProvider>
       <CustomFooter></CustomFooter>
     </ChakraProvider>
   </BrowserRouter>
