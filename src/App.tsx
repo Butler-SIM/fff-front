@@ -11,6 +11,7 @@ import BoardDetail from "./components/board/BoardDetail";
 import LotteryBox from "./components/playground/LotteryBox";
 import { AuthProvider } from "./components/common/Auth/AuthContext";
 import LoginComponent from "./components/user/Login";
+import Writing from "./components/writing/Writing";
 
 const colors = {
   brand: {
@@ -41,6 +42,8 @@ export const App = () => (
             <Route path="/board-list" element={<BoardList />} />
             {/* 게시판 상세 */}
             <Route path="/board/detail/:boardId" element={<BoardDetail />} />
+            {/* 글쓰기 */}
+            <Route path="/free/writing" element={<Writing />} />
             {/* 놀이터 */}
             <Route path="/lotto" element={<LotteryBox />} />
             {/* 로그인 */}
