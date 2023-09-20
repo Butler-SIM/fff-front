@@ -133,13 +133,8 @@ export default function BoardDetail() {
               </Box>
             </Box>
           </Box>
-          <Box
-            mt={150}
-            mb={20}
-            alignItems="center"
-            justifyContent="center"
-            border="1px "
-          >
+          {/* 하단 글 리스트  */}
+          <Box mt={100} mb={20}>
             <BoardListData></BoardListData>
           </Box>
         </Box>

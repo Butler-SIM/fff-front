@@ -23,8 +23,8 @@ const colors = {
 const theme = extendTheme({
   colors,
   fonts: {
-    body: '"Noto Sans", "malgun gothic", AppleGothic, dotum, sans-serif',
-    heading: '"Noto Sans", "malgun gothic", AppleGothic, dotum, sans-serif',
+    body: '"Noto Sans",sans-serif',
+    heading: '"Noto Sans", sans-serif',
   },
 });
 
