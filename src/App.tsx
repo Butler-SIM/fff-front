@@ -13,6 +13,7 @@ import { AuthProvider } from "./components/common/Auth/AuthContext";
 import LoginComponent from "./components/user/Login";
 import Writing from "./components/writing/Writing";
 import FreeBoard from "./components/board/FreeBoardList";
+import FreeBoardDetail from "./components/board/FreeBoardDetail";
 
 const colors = {
   brand: {
@@ -41,14 +42,16 @@ export const App = () => (
             <Route path="/" element={<MainLayout />} />
             {/* 게시판 목록 */}
             <Route path="/board-list" element={<BoardList />} />
-            {/* 자유 게판 */}
-            <Route path="/free-board" element={<FreeBoard />} />
             {/* 게시판 상세 */}
             <Route path="/board/detail/:boardId" element={<BoardDetail />} />
+            {/* 자유 게시판 */}
+            <Route path="/free-board" element={<FreeBoard />} />
+            {/* 자유 게시판 상세 */}
+            <Route path="/free-board/detail/:Id" element={<FreeBoardDetail />} />
             {/* 글쓰기 */}
             <Route
               path="/free-board/writing"
-              element={<Writing category="자유"/>}
+              element={<Writing category="자유" />}
             />
             {/* 놀이터 */}
             <Route path="/lotto" element={<LotteryBox />} />

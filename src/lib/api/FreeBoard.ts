@@ -3,6 +3,7 @@ import { AxiosError } from 'axios';
 import { axiosAuthApi } from './api';
 
 export type FreeBoardItem = {
+  id: number;
   title: string;
   nickname: string;
   comment_count: number;
