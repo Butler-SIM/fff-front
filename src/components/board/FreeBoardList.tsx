@@ -1,43 +1,41 @@
+//FreeBoardList.tsx
 import {
   Table,
   Thead,
-  Tbody,
-  Tfoot,
-  Tr,
+  Tbody, Tr,
   Th,
-  Td,
-  TableCaption,
-  TableContainer,
-  Box,
+  Td, Box,
   Container,
   Text,
   useColorModeValue,
   Button,
-  Flex,
+  Flex
 } from "@chakra-ui/react";
 import { useBreakpointValue } from "@chakra-ui/react";
 import { useState } from "react";
-import { Link as ChakraLink, LinkProps } from "@chakra-ui/react";
+import { Link as ChakraLink } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
+import { FreeBoardItem } from "../../lib/api/FreeBoard";
 
-type DataItem = {
-  title: string;
-  comment: number;
-};
 
-export function BoardListData(props: any) {
-  const [dataList, setDataList] = useState<DataItem[]>([
-    { title: "t1adfadsfda", comment: 1 },
-    { title: "taadsfadsf2", comment: 2 },
-    { title: "tgsfggffsdgfgsdgsfdgsfd3", comment: 3 },
-    { title: "t4sgsgfdfgsdfgsdgfsd", comment: 4 },
-    { title: "t4sgsgfdfgsdfgsdgfsd", comment: 5 },
-    { title: "t4sgsgfdfgsdfgsdgfsd", comment: 6 },
-    { title: "t4sgsgfdfgsdfgsdgfsd", comment: 7 },
-    { title: "t4sgsgfdfgsdfgsdgfsd", comment: 8 },
-    { title: "t4sgsgfdfgsdfgsdgfsd", comment: 9 },
-    { title: "t4sgsgfdfgsdfgsdgfsd", comment: 10 },
-  ]);
+
+
+
+export function FreeBoardList(props: any) {
+    const [data, setDataList] = useState<FreeBoardItem[]>([]);
+
+    useEffect(() => {
+        // API 요청
+        axios.get("http://localhost:8000/free-board/")
+          .then(response => {
+            setDataList(response.data.results);
+          })
+          .catch(error => {
+            console.error(error);
+          });
+    }, []);
 
   return (
     <Box>
@@ -61,7 +59,7 @@ export function BoardListData(props: any) {
       </Box>
 
       <Button alignSelf="flex-end">
-        <ChakraLink as={ReactRouterLink} to="/free/writing">글쓰기</ChakraLink>
+        <ChakraLink as={ReactRouterLink} to="/free-board/writing">글쓰기</ChakraLink>
       </Button>
     </Flex>
       <Table
@@ -85,67 +83,40 @@ export function BoardListData(props: any) {
           </Tr>
         </Thead>
         <Tbody>
-          {dataList.map((item) => (
+          {data.map((item) => (
             <Tr>
               <Td>
                 <ChakraLink as={ReactRouterLink} to="/board/detail/:boardId">
                   <Text isTruncated maxWidth="130px">
                     {item.title}{" "}
                     <Text as="span" color="red">
-                      ({item.comment})
+                      ({item.comment_count})
                     </Text>
                   </Text>
                 </ChakraLink>
               </Td>
 
               <Td>millimetres</Td>
-              <Td>5</Td>
+              <Td>{item.recommend}</Td>
             </Tr>
           ))}
-          <Tr>
-            <Td>
-              <Text isTruncated maxWidth="130px">
-                inchㄴㄹadsafddfasadfsadfsdfdffad
-              </Text>
-            </Td>
-            <Td>millimetres</Td>
-            <Td>254</Td>
-          </Tr>
-          <Tr>
-            <Td>
-              <Text isTruncated maxWidth="130px">
-                inchㄴㄹadsafddfasadfsadfsdfdffad
-              </Text>
-            </Td>
-            <Td>centimetres</Td>
-            <Td>3048</Td>
-          </Tr>
-          <Tr>
-            <Td>
-              <Text isTruncated maxWidth="130px">
-                inchㄴㄹadsafddfasadfsadfsdfdffad
-              </Text>
-            </Td>
-            <Td>metres</Td>
-            <Td>0.91444</Td>
-          </Tr>
+
         </Tbody>
       </Table>
     </Box>
   );
 }
 
-export default function BoardList() {
+
+export default function FreeBoard() {
   const displayFlex = useBreakpointValue({ base: "block" });
 
   return (
     <Container maxW={"5xl"}>
-      <Box
-        mt={150}
-        mb={20}
-      >
-        <BoardListData title={"Today Best"}></BoardListData>
+      <Box mt={150} mb={20}>
+        <FreeBoardList title="자유"></FreeBoardList>
       </Box>
     </Container>
   );
 }
+

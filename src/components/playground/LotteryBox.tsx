@@ -24,6 +24,7 @@ export default class LotteryBox extends React.Component<
   LotteryBoxState
 > {
   constructor(props: LotteryBoxProps) {
+    console.log("몇번?")
     super(props);
     this.state = {
       number: [0, 0, 0, 0, 0, 0],
@@ -32,7 +33,7 @@ export default class LotteryBox extends React.Component<
       isExcludeModalOpen: false,
     };
   }
-
+  
   randomize = () => {
     if (!this.state.effect) {
       const excludedSet = new Set(this.state.excludedNumbers.map(Number)); // 제외할 숫자를 숫자 형태의 Set으로 변환

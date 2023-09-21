@@ -12,6 +12,7 @@ import LotteryBox from "./components/playground/LotteryBox";
 import { AuthProvider } from "./components/common/Auth/AuthContext";
 import LoginComponent from "./components/user/Login";
 import Writing from "./components/writing/Writing";
+import FreeBoard from "./components/board/FreeBoardList";
 
 const colors = {
   brand: {
@@ -40,10 +41,15 @@ export const App = () => (
             <Route path="/" element={<MainLayout />} />
             {/* 게시판 목록 */}
             <Route path="/board-list" element={<BoardList />} />
+            {/* 자유 게판 */}
+            <Route path="/free-board" element={<FreeBoard />} />
             {/* 게시판 상세 */}
             <Route path="/board/detail/:boardId" element={<BoardDetail />} />
             {/* 글쓰기 */}
-            <Route path="/free/writing" element={<Writing />} />
+            <Route
+              path="/free-board/writing"
+              element={<Writing category="자유"/>}
+            />
             {/* 놀이터 */}
             <Route path="/lotto" element={<LotteryBox />} />
             {/* 로그인 */}

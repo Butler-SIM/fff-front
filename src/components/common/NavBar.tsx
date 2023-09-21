@@ -74,7 +74,7 @@ export default function CustomNav() {
               fontSize={17}
             >
               <NavLink name={"베스트"} link={"/board-list"}></NavLink>
-              <NavLink name={"자유"} link={"dd"}></NavLink>
+              <NavLink name={"자유"} link={"/free-board"}></NavLink>
               <NavLink name={"익명"} link={"dd"}></NavLink>
               <NavLink name={"커뮤니티"} link={"dd"}></NavLink>
               <NavLink name={"놀이터"} link={"/lotto"}></NavLink>
@@ -126,7 +126,7 @@ export default function CustomNav() {
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4}>
               <NavLink name={"베스트"} link={"/board-list"}></NavLink>
-              <NavLink name={"자유"} link={"dd"}></NavLink>
+              <NavLink name={"자유"} link={"/free-board"}></NavLink>
               <NavLink name={"익명"} link={"dd"}></NavLink>
               <NavLink name={"커뮤니티"} link={"dd"}></NavLink>
               <NavLink name={"놀이터"} link={"/lotto"}></NavLink>
