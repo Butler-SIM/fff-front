@@ -12,6 +12,7 @@ import {
   Text,
   useColorModeValue,
   Button,
+  Flex,
 } from "@chakra-ui/react";
 import { useBreakpointValue } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
@@ -36,15 +37,37 @@ export function FreeBoardList(props: any) {
 
     return (
       <Box>
-        <Box bg={useColorModeValue("gray.100", "gray.900")}>
-          {props.title ? props.title : ""}
+         <Flex
+        direction="column"
+        justifyContent="space-between"
+        height="100%" // Adjust as needed
+      >
+        <Box>
+          <Box bg={useColorModeValue("gray.100", "gray.900")}>
+            {props.title ? props.title : ""}
+          </Box>
+
+          <Table
+            variant="simple"
+            fontSize={useBreakpointValue({ base: "10px", md: "13px" })}
+            mt={20}
+          >
+            {/* ... */}
+          </Table>
         </Box>
 
+        <Button alignSelf="flex-end">
+          <ChakraLink as={ReactRouterLink} to="/free-board/writing">
+            글쓰기
+          </ChakraLink>
+        </Button>
+      </Flex>
+      
         <Table
           variant="simple"
           fontSize={useBreakpointValue({ base: "10px", md: "13px" })}
-          mt={20}
         >
+          
           <Thead>
             <Tr>
               <Th width={useBreakpointValue({ base: "180px", md: "550px" })}>
@@ -61,6 +84,7 @@ export function FreeBoardList(props: any) {
               </Th>
             </Tr>
           </Thead>
+          
           <Tbody>
             {data.map((item) => (
               <Tr key={item.id}>
@@ -81,13 +105,6 @@ export function FreeBoardList(props: any) {
             ))}
           </Tbody>
         </Table>
-
-        <Button alignSelf="flex-end">
-          <ChakraLink as={ReactRouterLink} to="/free-board/writing">
-            글쓰기
-          </ChakraLink>
-        </Button>
-
       </Box>
     );
 }

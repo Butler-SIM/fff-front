@@ -34,11 +34,11 @@ export default function FreeBoardDetail() {
   const splitted = currentUrl.split("/");
 const lastElement = splitted[splitted.length - 1];
 
-console.log(lastElement); // 출력: "14"
+console.log(lastElement);
   useEffect(() => {
 
     console.log(currentUrl);
-    const boardId = lastElement; // 동적으로 변경되는 게시물 ID를 가져와서 변수에 할당하세요
+    const boardId = lastElement;
 
     const fetchData = async () => {
       try {

@@ -17,28 +17,31 @@ import { useNavigate } from "react-router-dom";
 export default function Writing({ category }: { category: string }) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  
-   const navigate = useNavigate();
 
-   const handleContentChange = (data: string) => {
-     setContent(data);
-   };
+  const navigate = useNavigate();
 
-   const handleSubmit = async () => {
-     if (!title || !content) {
-       alert("제목과 내용을 모두 입력해주세요.");
-       return;
-     }
+  const handleContentChange = (data: string) => {
+    setContent(data);
+  };
 
-     const requestData = {
-       title: title,
-       content: content,
-     };
+  const handleSubmit = async () => {
+    if (!title || !content) {
+      alert("제목과 내용을 모두 입력해주세요.");
+      return;
+    }
+
+    const requestData = {
+      title: title,
+      content: content,
+    };
 
     try {
-      await axios.post("http://localhost:8000/free-board/", requestData);
+      const response = await axios.post(
+        "http://localhost:8000/free-board/",
+        requestData
+      );
       // 성공적으로 요청이 완료된 경우 처리
-      navigate("/", { replace: true });
+      navigate(`/free-board/detail/${response.data.id}`, { replace: true });
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const err: AxiosError = error;
@@ -49,22 +52,23 @@ export default function Writing({ category }: { category: string }) {
         }
       }
     }
-   };
+    
+  };
 
-   return (
-     <Box width="100%" height="100%" display="flex">
-       <Container maxW={"5xl"} height="100%" padding={4}>
-         <Box textAlign="left" mt={150} mb={20}>
-           <Box height="40px" fontSize={30} fontWeight={"900"}>
-             {category}
-           </Box>
-           <Input
-             type="text"
-             name="title"
-             placeholder="제목을 입력해주세요."
-             w="100%"
-             h={50}
-             mt={10}
+  return (
+    <Box width="100%" height="100%" display="flex">
+      <Container maxW={"5xl"} height="100%" padding={4}>
+        <Box textAlign="left" mt={150} mb={20}>
+          <Box height="40px" fontSize={30} fontWeight={"900"}>
+            {category}
+          </Box>
+          <Input
+            type="text"
+            name="title"
+            placeholder="제목을 입력해주세요."
+            w="100%"
+            h={50}
+            mt={10}
             onChange={(e) => setTitle(e.target.value)}
           />
 
