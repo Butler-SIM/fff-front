@@ -24,20 +24,26 @@ export default class LotteryBox extends React.Component<
   LotteryBoxState
 > {
   constructor(props: LotteryBoxProps) {
-    console.log("몇번?")
     super(props);
     this.state = {
       number: [0, 0, 0, 0, 0, 0],
       effect: false,
+
+      // Change this line
       excludedNumbers: [],
+
       isExcludeModalOpen: false,
+
+      // Add this line
+      selectedExcludeCount: null,
     };
   }
-  
+
   randomize = () => {
     if (!this.state.effect) {
-      const excludedSet = new Set(this.state.excludedNumbers.map(Number)); // 제외할 숫자를 숫자 형태의 Set으로 변환
-      const availableNumbers = numbers.filter((num) => !excludedSet.has(num)); // 제외된 숫자를 제외한 사용 가능한 번호들
+      const excludedSet = new Set(this.state.excludedNumbers.map(Number)); // Exclude numbers in Set form
+      const availableNumbers = numbers.filter((num) => !excludedSet.has(num)); // Available numbers excluding the excluded ones
+
       const arr = [];
       for (let i = 0; i < this.state.number.length; i++) {
         const randomIndex = Math.floor(Math.random() * availableNumbers.length);
@@ -63,19 +69,23 @@ export default class LotteryBox extends React.Component<
             로또 번호 생성기
           </Text>
 
-          {/* 제외된 숫자  */}
+          {/* Excluded Numbers */}
           <Box
             id="excludedNumbers"
-            display="flex"
             flexWrap={{ base: "wrap", md: "nowrap" }}
             alignItems="center"
             justifyContent="left"
             mb={10}
           >
-            <Text>제외된 숫자 : </Text>
+            <Box>
+              <Text>
+                제외된 숫자 : ({this.state.excludedNumbers.length}개){" "}
+              </Text>
+            </Box>
+
             {this.state.excludedNumbers
-              .slice() // 원본 배열을 수정하지 않기 위해 복사한 후 정렬합니다.
-              .sort((a, b) => Number(a) - Number(b)) // 낮은 순서로 정렬합니다.
+              .slice()
+              .sort((a, b) => Number(a) - Number(b))
               .map((numStr: string, index: number) => {
                 let bgColor;
                 const num = Number(numStr);
@@ -90,15 +100,37 @@ export default class LotteryBox extends React.Component<
                 } else if (num >= 41 && num <= 45) {
                   bgColor = "#17b63a";
                 }
-
                 return (
-                  <Text
+                  <Checkbox
                     key={index}
-                    className="smallBall"
-                    bg={bgColor}
+                    value={num.toString()}
+                    isChecked={this.state.excludedNumbers.includes(
+                      num.toString()
+                    )}
+                    onChange={(e) => {
+                      const isChecked = e.target.checked;
+                      if (isChecked) {
+                        // Add the number to excludedNumbers array
+                        this.setState((prevState) => ({
+                          excludedNumbers: [
+                            ...prevState.excludedNumbers,
+                            num.toString(),
+                          ],
+                        }));
+                      } else {
+                        // Remove the number from excludedNumbers array
+                        this.setState((prevState) => ({
+                          excludedNumbers: prevState.excludedNumbers.filter(
+                            (n) => n !== num.toString()
+                          ),
+                        }));
+                      }
+                    }}
                   >
-                    {num}
-                  </Text>
+                    <Text className="smallBall" bg={bgColor}>
+                      {num}
+                    </Text>
+                  </Checkbox>
                 );
               })}
           </Box>
@@ -120,7 +152,6 @@ export default class LotteryBox extends React.Component<
               } else {
                 color = "grey ball";
               }
-
               return (
                 <LotteryItem
                   key={index}
@@ -142,7 +173,7 @@ export default class LotteryBox extends React.Component<
               번호 뽑기!
             </Button>
 
-            {/* 숫자 제외 버튼 추가 */}
+            {/* Exclude Number Button */}
             <Button
               colorScheme="red"
               onClick={() => this.setState({ isExcludeModalOpen: true })}
@@ -152,7 +183,7 @@ export default class LotteryBox extends React.Component<
               숫자 제외하기
             </Button>
 
-            {/* 숫자 제외 모달 창 */}
+            {/* Exclude Number Modal */}
             <Modal
               isOpen={this.state.isExcludeModalOpen}
               onClose={() => this.setState({ isExcludeModalOpen: false })}
@@ -161,27 +192,31 @@ export default class LotteryBox extends React.Component<
               <ModalContent width={400}>
                 <ModalHeader>제외할 숫자 선택</ModalHeader>
                 <ModalBody>
-                  {/* 체크박스 그룹으로 모든 숫자 표시 */}
-                  {/* 체크박스가 변경될 때마다 excludedNumbers 업데이트 */}
+                  {/* Checkbox group showing all numbers */}
+                  {/* Update excludedNumbers every time the checkbox changes */}
                   <CheckboxGroup
-                    value={this.state.excludedNumbers}
+                    value={this.state.excludedNumbers.map((num) =>
+                      Number(num) < 10 ? `0${num}` : num.toString()
+                    )}
                     onChange={(values: string[]) => {
                       // Add type annotation here
-                      if (values.length > 25) {
-                        alert("25개까지만 제외 가능합니다.");
+                      if (values.length > 30) {
+                        alert("30개까지만 제외 가능합니다.");
                         return;
                       }
-                      this.setState({ excludedNumbers: values }); // Save as strings
+
+                      // Change this line
+                      this.setState({ excludedNumbers: values });
                     }}
                   >
                     {numbers.map((num) => {
-                      // num이 한 자리 수인 경우 앞에 공백 두 개를 추가
+                      // Add two spaces in front of the number if it is a single digit
                       const displayNum = num < 10 ? `0${num}` : num.toString();
 
                       return (
-                        // 각 체크박스는 해당 숫자를 value로 가짐
-                        // key prop으로 num을 전달하여 리액트가 각 요소를 식별할 수 있게 함
-                        // displayNum 값을 사용하여 표시
+                        // Each checkbox has its own number as its value
+                        // Passes the key prop to allow React to identify each element
+                        // Uses the displayNum value for display
                         <Checkbox value={displayNum} key={num} mr={1.5}>
                           {displayNum}
                         </Checkbox>
@@ -189,10 +224,93 @@ export default class LotteryBox extends React.Component<
                     })}
                   </CheckboxGroup>
                 </ModalBody>
-                <ModalFooter>
+                <ModalFooter justifyContent="space-between">
+                  <Button
+                    colorScheme="red"
+                    mr={3}
+                    onClick={() => {
+                      const excludeCount =
+                        Number(this.state.selectedExcludeCount) ?? null;
+
+                      if (
+                        excludeCount === null ||
+                        excludeCount + this.state.excludedNumbers.length > 30
+                      ) {
+                        alert("30개까지 제외할 수 있습니다.");
+                        return;
+                      }
+
+                      let availableNumbers = numbers.filter(
+                        (num) =>
+                          !this.state.excludedNumbers.includes(num.toString())
+                      );
+
+                      for (let i = 0; i < excludeCount; i++) {
+                        if (availableNumbers.length === i) {
+                          break;
+                        }
+
+                        const randomIndex = Math.floor(
+                          Math.random() * availableNumbers.length
+                        );
+
+                        const randomNumber = availableNumbers.splice(
+                          randomIndex,
+                          1
+                        )[0];
+
+                        // Update the state directly in the loop instead of after the loop finishes.
+                        this.setState((prevState) => ({
+                          excludedNumbers: [
+                            ...prevState.excludedNumbers,
+                            randomNumber.toString(),
+                          ],
+                        }));
+                      }
+                    }}
+                  >
+                    랜덤 숫자 제외하기
+                  </Button>
+
+                  <div>
+                    <select
+                      onChange={(e) => {
+                        this.setState({
+                          selectedExcludeCount: Number(e.target.value),
+                        });
+                      }}
+                      defaultValue=""
+                    >
+                      {/* Add an empty option for default value */}
+                      <option value="" disabled hidden>
+                        0
+                      </option>
+
+                      {Array.from({ length: 30 }, (_, i) => i + 1).map(
+                        (num) => (
+                          <option key={num} value={num}>
+                            {num}
+                          </option>
+                        )
+                      )}
+                    </select>
+
+                    <Button
+                      colorScheme="teal"
+                      ml={15}
+                      onClick={() => {
+                        this.setState({
+                          excludedNumbers: [],
+                          selectedExcludeCount: null,
+                        });
+                      }}
+                    >
+                      초기화
+                    </Button>
+                  </div>
+
                   <Button
                     colorScheme="blue"
-                    mr={3}
                     onClick={() => this.setState({ isExcludeModalOpen: false })}
                   >
                     닫기
