@@ -158,7 +158,7 @@ export default class LotteryBox extends React.Component<
               onClose={() => this.setState({ isExcludeModalOpen: false })}
             >
               <ModalOverlay />
-              <ModalContent>
+              <ModalContent width={400}>
                 <ModalHeader>제외할 숫자 선택</ModalHeader>
                 <ModalBody>
                   {/* 체크박스 그룹으로 모든 숫자 표시 */}
@@ -182,7 +182,7 @@ export default class LotteryBox extends React.Component<
                         // 각 체크박스는 해당 숫자를 value로 가짐
                         // key prop으로 num을 전달하여 리액트가 각 요소를 식별할 수 있게 함
                         // displayNum 값을 사용하여 표시
-                        <Checkbox value={displayNum} key={num}>
+                        <Checkbox value={displayNum} key={num} mr={1.5}>
                           {displayNum}
                         </Checkbox>
                       );
