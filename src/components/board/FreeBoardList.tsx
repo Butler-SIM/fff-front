@@ -99,7 +99,7 @@ export function FreeBoardList(props: any) {
                   </ChakraLink>
                 </Td>
 
-                <Td>작성자 정보</Td> {/* 작성자 정보를 표시할 필요에 따라 수정해주세요 */}
+                <Td>{item.user.nickname}</Td> {/* 작성자 정보를 표시할 필요에 따라 수정해주세요 */}
                 <Td>{item.recommend}</Td>
               </Tr>
             ))}

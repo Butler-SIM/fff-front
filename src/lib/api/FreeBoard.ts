@@ -8,6 +8,9 @@ export type FreeBoardItem = {
   nickname: string;
   comment_count: number;
   recommend: number;
+  user: {
+    nickname:string;
+  };
 };
 
 export const createFreeBoardPost = async (params: FreeBoardItem) => {
