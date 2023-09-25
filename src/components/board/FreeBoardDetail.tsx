@@ -1,12 +1,16 @@
 "use client";
-
+import Cookies from "js-cookie";
 import { ChatIcon } from "@chakra-ui/icons";
-import { Box, Button, Container, Text, Textarea } from "@chakra-ui/react";
+import { Box, Button, Container, Text, Textarea, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from 'axios';
 import { useLocation } from "react-router-dom";
 import FreeBoard from "./FreeBoardList";
 import { timeFromNow } from "../../common";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+// Call it once in your app. At the root of your app is the best place
+
 const TextArea = ({
   value,
   onChange,
@@ -47,6 +51,67 @@ export function FreeBoardDetailItem() {
   const currentUrl = location.pathname;
   const splitted = currentUrl.split("/");
   const lastElement = splitted[splitted.length - 1];
+
+  const handleLike = async () => {
+    const cookieKey = `recommend-${boardData.id}`;
+    if (Cookies.get(cookieKey)) {
+      alert("이미 추천하였습니다.");
+      return;
+    }
+    
+    try {
+      await axios.put(`http://localhost:8000/free-board/${boardData.id}/recommend`);
+      await setBoardData((prevState: any) => ({
+        ...prevState,
+        recommend: prevState.recommend + 1,
+      }));
+      Cookies.set(cookieKey, "true");
+      alert("추천!");
+    } catch (error) {
+      
+      if (axios.isAxiosError(error)) {
+        const err: AxiosError = error;
+        if (err.response?.status === 401 || err.response?.status === 403) {
+          alert("회원만 가능합니다");
+        }
+        
+        // handle other errors as needed
+      }
+      
+    }
+  };
+  
+  const handleDislike = async () => {
+  
+     const cookieKey = `not_recommend-${boardData.id}`;
+     if (Cookies.get(cookieKey)) {
+       alert("이미 비추천하였습니다.");
+       return;
+     }
+  
+     try{
+       await axios.put(`http://localhost:8000/free-board/${boardData.id}/not-recommend`);
+       await setBoardData((prevState: any) => ({
+         ...prevState,
+         not_recommend: prevState.not_recommend + 1,
+       }));
+       Cookies.set(cookieKey, "true");
+       alert("비추!");
+       
+     }catch(error){
+       
+       if(axios.isAxiosError(error)){
+         const err : AxiosError = error;
+  
+         if(err.response?.status ===401 || err.response?.status ===403){
+          alert("회원만 가능합니다");
+         }
+  
+         // handle other errors as needed 
+       }
+  
+     }
+  };
 
   console.log(lastElement);
   useEffect(() => {
@@ -93,7 +158,9 @@ export function FreeBoardDetailItem() {
           borderRadius={10}
         >
           <Text ml={3}>{boardData.user.nickname}</Text>
-          <Text mr={2} fontSize={13}>{timeFromNow(boardData.created_date)}</Text>
+          <Text mr={2} fontSize={13}>
+            {timeFromNow(boardData.created_date)}
+          </Text>
         </Box>
       )}
       <Box height="100%" fontSize={16} mt={150}>
@@ -116,13 +183,13 @@ export function FreeBoardDetailItem() {
           justifyContent="center"
           alignItems="center"
         >
-          <Button mr={10}>
+          <Button mr={10} onClick={handleLike}>
             👍추천{" "}
             <Text ml={2} fontWeight={800}>
               {boardData.recommend}{" "}
             </Text>
           </Button>
-          <Button>
+          <Button onClick={handleDislike}>
             👎비추천
             <Text ml={2} fontWeight={800}>
               {boardData.not_recommend}{" "}
