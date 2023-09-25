@@ -1,19 +1,12 @@
 "use client";
 
 import { ChatIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  Button,
-  Container,
-  Image,
-  Text,
-  Textarea,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Button, Container, Text, Textarea } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { BoardListData } from "./BoardList";
 import { useLocation } from "react-router-dom";
+import FreeBoard from "./FreeBoardList";
+import { timeFromNow } from "../../common";
 const TextArea = ({
   value,
   onChange,
@@ -71,7 +64,7 @@ export function FreeBoardDetailItem() {
     };
 
     fetchData();
-  }, []);
+  }, [location.pathname]);
 
   if (!boardData) return null; // 데이터 로딩 중에는 null을 반환하여 아무것도 표시하지 않음
 
@@ -88,6 +81,7 @@ export function FreeBoardDetailItem() {
       <Box height="40px" fontSize={23} fontWeight={"900"}>
         {boardData.title}
       </Box>
+      {/* 작성자, 생성시간, 조회수 */}
       {boardData && (
         <Box
           height="40px"
@@ -95,9 +89,11 @@ export function FreeBoardDetailItem() {
           bg={bgValue} // Use the bgValue variable here
           display="flex"
           alignItems="center"
+          justifyContent="space-between" // Add this line
           borderRadius={10}
         >
           <Text ml={3}>{boardData.user.nickname}</Text>
+          <Text mr={2} fontSize={13}>{timeFromNow(boardData.created_date)}</Text>
         </Box>
       )}
       <Box height="100%" fontSize={16} mt={150}>
@@ -170,10 +166,11 @@ export function FreeBoardDetailComment() {
       });
       setCommentText(""); // 폼 초기화
       fetchComments();
-    } catch (error: any) { // here we assert the type of error as 'any'
+    } catch (error: any) {
+      // here we assert the type of error as 'any'
       console.error(error);
-  
-      if (error.response) { 
+
+      if (error.response) {
         switch (error.response.status) {
           case 401:
           case 403:
@@ -186,16 +183,15 @@ export function FreeBoardDetailComment() {
             // For all other status codes
             alert(`An error occurred: ${error.message}`);
         }
-      } else if (error.request) { 
+      } else if (error.request) {
         // The request was made but no response was received
         alert("문제가 생겼습니다 잠시 후 다시 시도하세요");
-      } else { 
+      } else {
         // Something happened in setting up the request that triggered an Error
         alert("문제가 생겼습니다 잠시 후 다시 시도하세요");
       }
     }
   };
-  
 
   const fetchComments = async () => {
     try {
@@ -205,7 +201,7 @@ export function FreeBoardDetailComment() {
       setComments(response.data.results || []); // results 가 없으면 빈 배열 설정
     } catch (error) {
       console.error(error);
-      alert("댓글 등록에 실패하였습니다 잠시 후 다시 시도 해주세요")
+      alert("댓글 등록에 실패하였습니다 잠시 후 다시 시도 해주세요");
       setComments([]); // 에러 발생 시에도 comments를 빈 배열로 설정
     }
   };
@@ -213,7 +209,7 @@ export function FreeBoardDetailComment() {
   useEffect(() => {
     // 컴포넌트가 마운트될 때 처음으로 댓글 목록 가져오기
     fetchComments();
-  }, []);
+  }, [location.pathname]);
   return (
     <Box mt={15} textAlign={"left"}>
       {comments.map((comment) => (
@@ -256,7 +252,7 @@ export default function FreeBoardDetail() {
       </Box>
       {/* 하단 글 리스트  */}
       <Box mt={100} mb={20}>
-        <BoardListData></BoardListData>
+        <FreeBoard></FreeBoard>
       </Box>
     </Container>
   );

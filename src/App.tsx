@@ -14,6 +14,18 @@ import LoginComponent from "./components/user/Login";
 import Writing from "./components/writing/Writing";
 import FreeBoard from "./components/board/FreeBoardList";
 import FreeBoardDetail from "./components/board/FreeBoardDetail";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
+export default function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 const colors = {
   brand: {
@@ -33,6 +45,7 @@ const theme = extendTheme({
 
 export const App = () => (
   <BrowserRouter>
+    <ScrollToTop />
     <ChakraProvider theme={theme}>
       <AuthProvider>
         <Box textAlign="center" fontSize="xl">
@@ -47,7 +60,10 @@ export const App = () => (
             {/* 자유 게시판 */}
             <Route path="/free-board" element={<FreeBoard />} />
             {/* 자유 게시판 상세 */}
-            <Route path="/free-board/detail/:Id" element={<FreeBoardDetail />} />
+            <Route
+              path="/free-board/detail/:Id"
+              element={<FreeBoardDetail />}
+            />
             {/* 글쓰기 */}
             <Route
               path="/free-board/writing"
