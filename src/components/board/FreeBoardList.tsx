@@ -19,21 +19,25 @@ import { useState, useEffect } from "react";
 import { Link as ChakraLink } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import axios from "axios";
-import { FreeBoardItem } from "../../lib/api/FreeBoard";
+import { FreeBoardItem, FreeBoardResponse } from "../../lib/api/FreeBoard";
+import Paging from "../common/paging/paging";
 
 export function FreeBoardList(props: any) {
-    const [data, setDataList] = useState<FreeBoardItem[]>([]);
+  const [data, setDataList] = useState<FreeBoardItem[]>([]);
+  const [page, setPage] = useState(1);
+  const [totalItemsCount, setTotalItemsCount] = useState(0);
 
-    useEffect(() => {
-        // API 요청
-        axios.get("http://localhost:8000/free-board/")
-          .then(response => {
-            setDataList(response.data.results);
-          })
-          .catch(error => {
-            console.error(error);
-          });
-    }, []);
+  useEffect(() => {
+      axios.get(`http://localhost:8000/free-board/?page=${page}`)
+        .then(response => {
+          const responseData : FreeBoardResponse = response.data;
+          setDataList(responseData.results);
+          setTotalItemsCount(responseData.count);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+  }, [page]);
 
     return (
       <Box>
@@ -105,12 +109,15 @@ export function FreeBoardList(props: any) {
             ))}
           </Tbody>
         </Table>
+        <Paging 
+           activePage={page} 
+           totalItemsCount={totalItemsCount} 
+           onChange={(pageNumber) => setPage(pageNumber)} />
       </Box>
     );
 }
 
 export default function FreeBoard() {
-  const displayFlex = useBreakpointValue({ base: "block" });
 
   return (
     <Container maxW={"5xl"}>
@@ -119,6 +126,7 @@ export default function FreeBoard() {
         {/* title 속성이 없는 경우 기본값으로 '자유'를 사용합니다 */}
         {/* 필요에 따라 다른 속성도 추가하실 수 있습니다 */}
         <FreeBoardList title="자유"></FreeBoardList> 
+        
       </Box>
     </Container >
   );

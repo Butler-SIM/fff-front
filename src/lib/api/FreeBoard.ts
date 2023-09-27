@@ -2,16 +2,30 @@
 import { AxiosError } from 'axios';
 import { axiosAuthApi } from './api';
 
-export type FreeBoardItem = {
+
+export interface FreeBoardItem {
   id: number;
   title: string;
-  nickname: string;
-  comment_count: number;
+  content: string;
+  comment_count: string;
+  views: number;
   recommend: number;
+  not_recommend: number;
   user: {
-    nickname:string;
+    nickname: string,
+    profile_image?: string
   };
-};
+  created_date?: Date | string; 
+}
+
+export interface FreeBoardResponse {
+ count :number ;
+ next ?:string ; 
+ total_page :number ; 
+ previous ?:string ;
+ results :FreeBoardItem[] ;
+}
+
 
 export const createFreeBoardPost = async (params: FreeBoardItem) => {
   console.log("asdfafdsafdadf");
