@@ -1,5 +1,7 @@
+//userApi.ts
 import { AxiosError } from 'axios';
 import { axiosAuthApi, axiosApi } from './api';
+
 
 const userInfoData = {
   id: 367,
@@ -106,8 +108,9 @@ interface LoginReqParams {
 }
 
 export const login = async (params: LoginReqParams) => {
+
   return axiosApi
-    .post<LoginUserInfo>(`/user/login/`, params)
+    .post<LoginUserInfo>(`/accounts/login`, params)
     .then((res) => ({ res, err: null }))
     .catch((err: AxiosError) => ({ res: null, err }));
 };
@@ -116,14 +119,11 @@ interface SignUpReqParams {
   email: string;
   password1: string;
   password2: string;
-  marketing_check: number | null;
-  phone_number: string;
-  name: string;
-  gender?: string;
-  date_of_birth_birth_date?: string;
+  nickname: string;
+  emailcode: string;
 }
 
-// 생년월일, 성별 제거 (회원가입 허들 낮추기)
+
 export const signUp = async (params: SignUpReqParams) => {
   return axiosAuthApi
     .post<{ data: LoginUserInfo }>(`/user/registration`, params)
@@ -245,56 +245,6 @@ export const refreshToken = async (email: string) => {
     .catch((err: AxiosError) => ({ res: null, err }));
 };
 
-export type DeliveryType = 'super_delivery' | 'normal_delivery';
-
-export interface UserDeliveryInfo {
-  id: number;
-  recipient: string;
-  phone_number: string;
-  address1: string;
-  address2: string;
-  zip_code: string;
-  delivery_request: string;
-  door_password: string | null;
-  is_default: number;
-  user: number;
-  delivery_type: DeliveryType;
-}
-
-export const getUserDeliveryInfos = async () => {
-  return axiosAuthApi
-    .get<UserDeliveryInfo[]>('/user/delivery_infos/me')
-    .then((res) => ({ res, err: null }))
-    .catch((err: AxiosError) => ({ res: null, err }));
-};
-
-export const getUserDeliveryInfoById = async (id: number | string) => {
-  return axiosAuthApi
-    .get<UserDeliveryInfo>(`/user/delivery_infos/${id}`)
-    .then((res) => ({ res, err: null }))
-    .catch((err: AxiosError) => ({ res: null, err }));
-};
-
-export const createUserDeliveryInfos = async (params: Omit<UserDeliveryInfo, 'user' | 'id'>) => {
-  return axiosAuthApi
-    .post<UserDeliveryInfo>(`/user/delivery_infos/me`, params)
-    .then((res) => ({ res, err: null }))
-    .catch((err: AxiosError) => ({ res: null, err }));
-};
-
-export const updateUserDeliveryInfos = async (id: number | string, params: Partial<UserDeliveryInfo>) => {
-  return axiosAuthApi
-    .put<UserDeliveryInfo>(`/user/delivery_infos/${id}`, params)
-    .then((res) => ({ res, err: null }))
-    .catch((err: AxiosError) => ({ res: null, err }));
-};
-
-export const deleteUserDeliveryInfos = async (id: number) => {
-  return axiosAuthApi
-    .delete(`/user/delivery_infos/${id}`)
-    .then((res) => ({ res, err: null }))
-    .catch((err: AxiosError) => ({ res: null, err }));
-};
 
 export const deleteUsers = async (ids: number[]) => {
   return axiosAuthApi
@@ -356,6 +306,18 @@ export const updateResetPassword = async (email: string, password1: string, pass
 };
 
 
+export interface NickNameValidate {
+  nickname: string;
+}
+
+export const nickNameValidateReq = async (nickname: string) => {
+  return axiosAuthApi
+    .post<NickNameValidate>(`/accounts/nickname-validation`, { nickname })
+    .then((res) => ({ res, err: null }))
+    .catch((err: AxiosError) => ({ res: null, err }));
+};
+
+
 export default {
   getUserInfo,
   getUserInfoByToken,
@@ -368,11 +330,6 @@ export default {
   kakaoLogin,
   getKakaoInfo,
   certificateEmail,
-  getUserDeliveryInfos,
-  getUserDeliveryInfoById,
-  createUserDeliveryInfos,
-  updateUserDeliveryInfos,
-  deleteUserDeliveryInfos,
   deleteUsers,
   sendResetPasswordCode,
   verificationResetPasswordCode,
@@ -381,4 +338,5 @@ export default {
   updateResetPassword,
   checkExistUser,
   getUserList,
+  nickNameValidateReq
 };
