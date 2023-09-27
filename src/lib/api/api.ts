@@ -1,14 +1,15 @@
+//api.ts
 import axios, { AxiosError, AxiosRequestHeaders } from "axios";
 
 // 기본 api
 export const axiosApi = axios.create({
-  baseURL: "localhost:8000",
+  baseURL: "http://localhost:8000",
   // baseURL: API_URL,
 });
 
 // auth 적용된 api
 export const axiosAuthApi = axios.create({
-  baseURL: "localhost:8000",
+  baseURL: "http://localhost:8000",
   // baseURL: API_URL,
 });
 

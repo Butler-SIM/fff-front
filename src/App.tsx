@@ -10,12 +10,13 @@ import BoardList from "./components/board/BoardList";
 import BoardDetail from "./components/board/BoardDetail";
 import LotteryBox from "./components/playground/LotteryBox";
 import { AuthProvider } from "./components/common/Auth/AuthContext";
-import LoginComponent from "./components/user/Login";
+import LoginComponent from "./components/accounts/Login";
 import Writing from "./components/writing/Writing";
 import FreeBoard from "./components/board/FreeBoardList";
 import FreeBoardDetail from "./components/board/FreeBoardDetail";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import SignupCard from "./components/accounts/SignUp";
 
 export default function ScrollToTop() {
   const { pathname } = useLocation();
@@ -73,6 +74,7 @@ export const App = () => (
             <Route path="/lotto" element={<LotteryBox />} />
             {/* 로그인 */}
             <Route path="/login" element={<LoginComponent />} />
+            <Route path="/signUp" element={<SignupCard />} />
           </Routes>
 
           {/* 기타 컴포넌트들 */}

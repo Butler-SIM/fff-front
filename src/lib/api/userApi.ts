@@ -120,13 +120,13 @@ interface SignUpReqParams {
   password1: string;
   password2: string;
   nickname: string;
-  emailcode: string;
+  code: string;
 }
 
 
 export const signUp = async (params: SignUpReqParams) => {
   return axiosAuthApi
-    .post<{ data: LoginUserInfo }>(`/user/registration`, params)
+    .post<{ data: SignUpReqParams }>(`/accounts/signup`, params)
     .then((res) => ({ res, err: null }))
     .catch((err: AxiosError) => ({ res: null, err }));
 };
@@ -318,6 +318,32 @@ export const nickNameValidateReq = async (nickname: string) => {
 };
 
 
+export interface SenEmailCode {
+  type:string;
+  email: string;
+}
+
+export const sendEmailCode = async (params: SenEmailCode) => {
+  return axiosAuthApi
+    .post<any>(`/accounts/email/send`, params) 
+    .then((res) => ({ res, err: null }))
+    .catch((err: AxiosError) => ({ res: null, err }));
+};
+
+
+export interface EmailCodeVerification {
+  code:string;
+  email: string;
+}
+
+export const emailCodeVerification = async (params: EmailCodeVerification) => {
+  return axiosAuthApi
+    .post<any>(`/accounts/email/verify`, params) 
+    .then((res) => ({ res, err: null }))
+    .catch((err: AxiosError) => ({ res: null, err }));
+};
+
+
 export default {
   getUserInfo,
   getUserInfoByToken,
@@ -338,5 +364,7 @@ export default {
   updateResetPassword,
   checkExistUser,
   getUserList,
-  nickNameValidateReq
+  nickNameValidateReq,
+  sendEmailCode,
+  emailCodeVerification,
 };
