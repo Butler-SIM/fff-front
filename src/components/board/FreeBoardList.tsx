@@ -15,17 +15,25 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { useBreakpointValue } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link as ChakraLink } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import axios from "axios";
 import { FreeBoardItem, FreeBoardResponse } from "../../lib/api/FreeBoard";
 import Paging from "../common/paging/paging";
+import { AuthContext } from "../common/Auth/AuthContext";
 
 export function FreeBoardList(props: any) {
   const [data, setDataList] = useState<FreeBoardItem[]>([]);
   const [page, setPage] = useState(1);
   const [totalItemsCount, setTotalItemsCount] = useState(0);
+  const { isLoggedIn } = useContext(AuthContext);
+  const handleButtonClick = () => {
+    if (!isLoggedIn) {
+      alert("회원만 글쓰기가 가능합니다");
+      return false;
+    }
+  };
 
   useEffect(() => {
       axios.get(`http://localhost:8000/free-board/?page=${page}`)
@@ -60,7 +68,7 @@ export function FreeBoardList(props: any) {
           </Table>
         </Box>
 
-        <Button alignSelf="flex-end">
+        <Button alignSelf="flex-end" onClick={handleButtonClick}>
           <ChakraLink as={ReactRouterLink} to="/free-board/writing">
             글쓰기
           </ChakraLink>
