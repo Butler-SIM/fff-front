@@ -113,7 +113,7 @@ export function FreeBoardDetailItem() {
      }
   };
 
-  console.log(lastElement);
+
   useEffect(() => {
     const boardId = lastElement;
 
