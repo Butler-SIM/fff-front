@@ -17,6 +17,7 @@ import FreeBoardDetail from "./components/board/FreeBoardDetail";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import SignupCard from "./components/accounts/SignUp";
+import MyPage from "./components/accounts/MyPage";
 
 export default function ScrollToTop() {
   const { pathname } = useLocation();
@@ -75,6 +76,7 @@ export const App = () => (
             {/* 로그인 */}
             <Route path="/login" element={<LoginComponent />} />
             <Route path="/signUp" element={<SignupCard />} />
+            <Route path="/Mypage" element={<MyPage />} />
           </Routes>
 
           {/* 기타 컴포넌트들 */}

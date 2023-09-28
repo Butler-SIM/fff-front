@@ -133,7 +133,7 @@ export default function CustomNav() {
                 <MenuList fontSize={16}>
                   {/* 닉네임 */}
                   <MenuItem fontSize={13}>{userInfo?.nickname}</MenuItem>{" "}
-                  <MenuItem fontWeight={600}>마이페이지</MenuItem>
+                  <MenuItem fontWeight={600}> <NavLink name={"마이페이지"} link={"/mypage"}></NavLink></MenuItem>
                   <MenuDivider />
                   <MenuItem fontWeight={600} onClick={handleLogout}>
                     로그아웃
