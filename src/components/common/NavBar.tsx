@@ -1,5 +1,5 @@
 "use client";
-
+import React, { useState } from "react";
 import {
   Box,
   Flex,
@@ -22,6 +22,8 @@ import { Link as ReactRouterLink } from "react-router-dom";
 import { Link as ChakraLink, LinkProps } from "@chakra-ui/react";
 import { ColorModeSwitcher } from "../../ColorModeSwitcher";
 import { useAuth } from "./Auth/AuthContext";
+import { AxiosError } from "axios";
+import { axiosAuthApi } from "../../lib/api/api";
 
 interface Props {
   link: String;
@@ -45,10 +47,33 @@ const NavLink = (props: any) => {
   );
 };
 
+const checkExistUser = async () => {
+  return axiosAuthApi
+    .post("/accounts/logout")
+    .then((res) => ({ res, err: null }))
+    .catch((err: AxiosError) => ({ res: null, err }));
+};
+
 export default function CustomNav() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("userInfo") !== 'flase'
+  );
   const auth = useAuth();
 
+  const handleLogout = async () => {
+    const { res, err } = await checkExistUser();
+    if (res) {
+      localStorage.removeItem("userInfo");
+      setIsLoggedIn(false);
+    } else{
+      localStorage.removeItem("userInfo");
+      setIsLoggedIn(false);
+    }
+  };
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  console.log("isLoggedIn : ", isLoggedIn);
   return (
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
@@ -84,16 +109,12 @@ export default function CustomNav() {
           <Flex alignItems={"center"}>
             <ColorModeSwitcher></ColorModeSwitcher>
 
-            {!auth.isLoggedIn ? ( // Not logged in
-              
-              <Button
-                as={"a"}
-                fontSize={"sm"}
-                fontWeight={400}
-              >
-                <ChakraLink as={ReactRouterLink} to="/login">로그인</ChakraLink>
+            {!isLoggedIn ? ( // Not logged in
+              <Button as={"a"} fontSize={"sm"} fontWeight={400}>
+                <ChakraLink as={ReactRouterLink} to="/login">
+                  로그인
+                </ChakraLink>
               </Button>
-              
             ) : (
               // Logged in
               <Menu>
@@ -111,11 +132,13 @@ export default function CustomNav() {
                     }
                   />
                 </MenuButton>
-                <MenuList>
-                  <MenuItem>Link 1</MenuItem>
-                  <MenuItem>Link 2</MenuItem>
+                <MenuList fontSize={16}>
+                  <MenuItem fontSize={13}>{"닉네임"}</MenuItem>
+                  <MenuItem fontWeight={600}>마이페이지</MenuItem>
                   <MenuDivider />
-                  <MenuItem>Link 3</MenuItem>
+                  <MenuItem fontWeight={600} onClick={handleLogout}>
+                    로그아웃
+                  </MenuItem>
                 </MenuList>
               </Menu>
             )}

@@ -25,10 +25,10 @@ export default function LoginComponent() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
+  
   const handleLogin = async () => {
-    localStorage.removeItem("userInfo");
     
+    localStorage.removeItem("userInfo");
     setIsLoading(true); // 로딩 시작
     const { res, err } = await userApi.login({
       email,

@@ -22,7 +22,7 @@ axiosAuthApi.interceptors.request.use((config) => {
   const token = JSON.parse(
     window.localStorage.getItem("userInfo") || "{}"
   )?.token;
-  console.log("Token:", token);
+
   if (token) {
     overideConfig.headers = {
       ...overideConfig.headers,
