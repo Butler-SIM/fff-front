@@ -97,7 +97,7 @@ export const updateUserInfoByToken = async (params: UpdateUserInfoByTokenReq) =>
   if (paramsFilter.phone_number) paramsFilter.phone_number = paramsFilter.phone_number.replaceAll('-', '');
 
   return axiosAuthApi
-    .put<UserInfo>('/user/user_info', { params: paramsFilter })
+    .put<UserInfo>('/accounts/user_info', { params: paramsFilter })
     .then((res) => ({ res, err: null }))
     .catch((err: AxiosError) => ({ res: null, err }));
 };
@@ -240,7 +240,7 @@ export const certificateEmail = async (email: string) => {
 
 export const refreshToken = async (email: string) => {
   return axiosAuthApi
-    .post('/user/token/refresh/', { params: { email } })
+    .post('/accounts/token/refresh/', { params: { email } })
     .then((res) => ({ res, err: null }))
     .catch((err: AxiosError) => ({ res: null, err }));
 };

@@ -11,8 +11,9 @@ import {
 } from "@chakra-ui/react";
 import Editor from "../common/CkEditor";
 import { useState } from "react";
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError } from "axios"; // axios import 추가
 import { useNavigate } from "react-router-dom";
+import { axiosAuthApi } from "../../lib/api/api";
 
 export default function Writing({ category }: { category: string }) {
   const [title, setTitle] = useState("");
@@ -36,15 +37,16 @@ export default function Writing({ category }: { category: string }) {
     };
 
     try {
-      const response = await axios.post(
-        "http://localhost:8000/free-board/",
-        requestData
+      const response = await axiosAuthApi.post(
+        "/free-board/",
+        requestData // axiosAuthApi로 요청 변경
       );
-      // 성공적으로 요청이 완료된 경우 처리
+
       navigate(`/free-board/detail/${response.data.id}`, { replace: true });
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const err: AxiosError = error;
+        // axios로 에러 처리 변경
+        const err: AxiosError<any> = error; // AxiosError 타입에 대한 제네릭 추가
         if (err.response?.status === 401) {
           alert("회원만 글쓰기가 가능합니다");
         } else {
@@ -52,7 +54,6 @@ export default function Writing({ category }: { category: string }) {
         }
       }
     }
-    
   };
 
   return (

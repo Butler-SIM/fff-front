@@ -22,14 +22,12 @@ axiosAuthApi.interceptors.request.use((config) => {
   const token = JSON.parse(
     window.localStorage.getItem("userInfo") || "{}"
   )?.token;
-
+  console.log("Token:", token);
   if (token) {
     overideConfig.headers = {
       ...overideConfig.headers,
       Authorization: `Bearer ${token}`,
     } as AxiosRequestHeaders;
-    
-    
   }
 
   return overideConfig;
@@ -55,7 +53,7 @@ axiosAuthApi.interceptors.response.use(
         (errorCode === "token_not_valid" || errorCode === "user_not_found") &&
         !isRefresh &&
         originalRequest && // originalRequest가 정의되었는지 확인
-        originalRequest.url !== "/user/token/refresh/"
+        originalRequest.url !== "/accounts/token/refresh/"
       ) {
         isRefresh = true;
         const userInfo =
@@ -68,7 +66,7 @@ axiosAuthApi.interceptors.response.use(
               access: string;
               refresh: string;
               access_token_expiration: true;
-            }>("/user/token/refresh/", {
+            }>("/accounts/token/refresh/", {
               refresh: userInfo.refresh,
             });
 

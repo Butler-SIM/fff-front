@@ -13,7 +13,7 @@ import {
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
-import { Link as ReactRouterLink } from "react-router-dom";
+import { Link as ReactRouterLink, useNavigate } from "react-router-dom";
 import { Link as ChakraLink, LinkProps } from "@chakra-ui/react";
 import React, { useState } from "react";
 import userApi from "../../lib/api/userApi";
@@ -24,8 +24,11 @@ export default function LoginComponent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
+    localStorage.removeItem("userInfo");
+    
     setIsLoading(true); // 로딩 시작
     const { res, err } = await userApi.login({
       email,
@@ -42,6 +45,7 @@ export default function LoginComponent() {
           duration: 2000,
           isClosable: true,
         });
+        navigate("/", { replace: true });
       } else if (err?.status === 400) {
         toast({
           position: "top",
