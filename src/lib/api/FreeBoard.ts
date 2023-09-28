@@ -27,8 +27,8 @@ export interface FreeBoardResponse {
 }
 
 
-export const createFreeBoardPost = async (params: FreeBoardItem) => {
-  console.log("asdfafdsafdadf");
+export const createFreeBoard = async (params: FreeBoardItem) => {
+
   return axiosAuthApi
     .post(`/localhost8000:/free-board/`, params)
     .then((res) => ({ res, err: null }))

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Box,
   Flex,
@@ -21,9 +21,10 @@ import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { Link as ChakraLink, LinkProps } from "@chakra-ui/react";
 import { ColorModeSwitcher } from "../../ColorModeSwitcher";
-import { useAuth } from "./Auth/AuthContext";
+import { AuthContext, useAuth } from "./Auth/AuthContext";
 import { AxiosError } from "axios";
 import { axiosAuthApi } from "../../lib/api/api";
+import { getUserInfoByToken } from "../../lib/api/userApi";
 
 interface Props {
   link: String;
@@ -55,25 +56,22 @@ const checkExistUser = async () => {
 };
 
 export default function CustomNav() {
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem("userInfo") !== 'flase'
-  );
-  const auth = useAuth();
+
+  const authCtx = useContext(AuthContext);
+
+  useEffect(() => {
+    
+  }, [authCtx.isLoggedIn]);
+
 
   const handleLogout = async () => {
-    const { res, err } = await checkExistUser();
-    if (res) {
-      localStorage.removeItem("userInfo");
-      setIsLoggedIn(false);
-    } else{
-      localStorage.removeItem("userInfo");
-      setIsLoggedIn(false);
-    }
+
+    authCtx.setIsLoggedIn(false);
+
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  console.log("isLoggedIn : ", isLoggedIn);
   return (
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
@@ -109,7 +107,7 @@ export default function CustomNav() {
           <Flex alignItems={"center"}>
             <ColorModeSwitcher></ColorModeSwitcher>
 
-            {!isLoggedIn ? ( // Not logged in
+            {!authCtx.isLoggedIn ? ( // Not logged in
               <Button as={"a"} fontSize={"sm"} fontWeight={400}>
                 <ChakraLink as={ReactRouterLink} to="/login">
                   로그인

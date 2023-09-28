@@ -15,9 +15,10 @@ import {
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink, useNavigate } from "react-router-dom";
 import { Link as ChakraLink, LinkProps } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import userApi from "../../lib/api/userApi";
 import appUtils from "../../lib/appUtils";
+import { AuthContext } from "../common/Auth/AuthContext";
 
 export default function LoginComponent() {
   const toast = useToast();
@@ -26,6 +27,8 @@ export default function LoginComponent() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   
+  const { setIsLoggedIn } = useContext(AuthContext);
+
   const handleLogin = async () => {
     
     localStorage.removeItem("userInfo");
@@ -45,6 +48,7 @@ export default function LoginComponent() {
           duration: 2000,
           isClosable: true,
         });
+        setIsLoggedIn(true);
         navigate("/", { replace: true });
       } else if (err?.status === 400) {
         toast({
