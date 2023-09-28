@@ -60,47 +60,47 @@ export default function CustomFooter() {
       <Container as={Stack} maxW={'6xl'} py={10}>
         <SimpleGrid columns={{ base: 1, sm: 2, md: 4 }} spacing={8}>
           <Stack align={'flex-start'}>
-            <ListHeader>Company</ListHeader>
+            <ListHeader>-</ListHeader>
             <Box as="a" href={'#'}>
-              About Us
+           -
             </Box>
             <Box as="a" href={'#'}>
-              Blog
+            -
             </Box>
             <Box as="a" href={'#'}>
-              Careers
+              -
             </Box>
             <Box as="a" href={'#'}>
-              Contact Us
+              -
             </Box>
           </Stack>
 
           <Stack align={'flex-start'}>
             <ListHeader>Support</ListHeader>
             <Box as="a" href={'#'}>
-              Help Center
+              -
             </Box>
             <Box as="a" href={'#'}>
-              Safety Center
+              -
             </Box>
             <Box as="a" href={'#'}>
-              Community Guidelines
+              -
             </Box>
           </Stack>
 
           <Stack align={'flex-start'}>
-            <ListHeader>Legal</ListHeader>
+            <ListHeader>-</ListHeader>
             <Box as="a" href={'#'}>
-              Cookies Policy
+              -
             </Box>
             <Box as="a" href={'#'}>
-              Privacy Policy
+              -
             </Box>
             <Box as="a" href={'#'}>
-              Terms of Service
+           -
             </Box>
             <Box as="a" href={'#'}>
-              Law Enforcement
+              -
             </Box>
           </Stack>
 

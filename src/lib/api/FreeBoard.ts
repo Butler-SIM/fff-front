@@ -1,7 +1,6 @@
 // FreeBoard.ts
-import { AxiosError } from 'axios';
-import { axiosAuthApi } from './api';
-
+import { AxiosError } from "axios";
+import { axiosAuthApi } from "./api";
 
 export interface FreeBoardItem {
   id: number;
@@ -11,24 +10,20 @@ export interface FreeBoardItem {
   views: number;
   recommend: number;
   not_recommend: number;
-  user: {
-    nickname: string,
-    profile_image?: string
-  };
-  created_date?: Date | string; 
+  nickname: string;
+
+  created_date?: Date | string;
 }
 
 export interface FreeBoardResponse {
- count :number ;
- next ?:string ; 
- total_page :number ; 
- previous ?:string ;
- results :FreeBoardItem[] ;
+  count: number;
+  next?: string;
+  total_page: number;
+  previous?: string;
+  results: FreeBoardItem[];
 }
 
-
 export const createFreeBoard = async (params: FreeBoardItem) => {
-
   return axiosAuthApi
     .post(`/localhost8000:/free-board/`, params)
     .then((res) => ({ res, err: null }))

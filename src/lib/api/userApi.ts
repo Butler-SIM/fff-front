@@ -43,8 +43,9 @@ export const getUserInfo = async (userId: number | string) => {
 };
 
 export const getUserInfoByToken = async () => {
+  // 토큰으로 현재 유저 정보 조회
   return axiosAuthApi
-    .get<UserInfo>('/user/user_info')
+    .get('/accounts/user')
     .then((res) => ({ res, err: null }))
     .catch((err: AxiosError) => ({ res: null, err }));
 };

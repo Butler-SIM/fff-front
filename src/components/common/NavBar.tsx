@@ -29,6 +29,11 @@ import { getUserInfoByToken } from "../../lib/api/userApi";
 interface Props {
   link: String;
 }
+interface UserInfo {
+  id: number;
+  nickname: string;
+  profile_image: string;
+}
 
 const NavLink = (props: any) => {
   return (
@@ -48,29 +53,26 @@ const NavLink = (props: any) => {
   );
 };
 
-const checkExistUser = async () => {
-  return axiosAuthApi
-    .post("/accounts/logout")
-    .then((res) => ({ res, err: null }))
-    .catch((err: AxiosError) => ({ res: null, err }));
-};
-
 export default function CustomNav() {
-
   const authCtx = useContext(AuthContext);
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
 
-  useEffect(() => {
-    
-  }, [authCtx.isLoggedIn]);
-
+  useEffect(() => {}, [authCtx.isLoggedIn]);
 
   const handleLogout = async () => {
-
     authCtx.setIsLoggedIn(false);
-
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  useEffect(() => {
+    // 컴포넌트가 마운트될 때 유저 정보 가져오기
+    getUserInfoByToken().then(({ res }) => {
+      if (res?.status === 200) {
+        setUserInfo(res.data);
+      }
+    });
+  }, [authCtx.isLoggedIn]);
 
   return (
     <>
@@ -125,13 +127,12 @@ export default function CustomNav() {
                 >
                   <Avatar
                     size={"sm"}
-                    src={
-                      "https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-                    }
+                    src={userInfo?.profile_image || "public/no_profile.png"} // 프로필 이미지가 없을 경우 기본 이미지 사용
                   />
                 </MenuButton>
                 <MenuList fontSize={16}>
-                  <MenuItem fontSize={13}>{"닉네임"}</MenuItem>
+                  {/* 닉네임 */}
+                  <MenuItem fontSize={13}>{userInfo?.nickname}</MenuItem>{" "}
                   <MenuItem fontWeight={600}>마이페이지</MenuItem>
                   <MenuDivider />
                   <MenuItem fontWeight={600} onClick={handleLogout}>

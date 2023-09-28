@@ -269,7 +269,7 @@ export default class LotteryBox extends React.Component<
                       }
                     }}
                   >
-                    랜덤 숫자 제외하기
+                    랜덤 제외하기
                   </Button>
 
                   <div>

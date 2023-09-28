@@ -157,7 +157,7 @@ export function FreeBoardDetailItem() {
           justifyContent="space-between" // Add this line
           borderRadius={10}
         >
-          <Text ml={3}>{boardData.user.nickname}</Text>
+          <Text ml={3}>{boardData.nickname}</Text>
           <Text mr={2} fontSize={13}>
             {timeFromNow(boardData.created_date)}
           </Text>
