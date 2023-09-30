@@ -122,7 +122,9 @@ export default function LoginComponent() {
                 <ChakraLink as={ReactRouterLink} to="/signUp">
                   <Text color={"blue.400"}>회원가입</Text>
                 </ChakraLink>
-                <Text color={"blue.400"}>비밀번호 찾기</Text>
+                <ChakraLink as={ReactRouterLink} to="/PasswordFind">
+                  <Text color={"blue.400"}>비밀번호 찾기</Text>
+                </ChakraLink>
               </Stack>
               <Button
                 bg={"blue.400"}

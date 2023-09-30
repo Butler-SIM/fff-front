@@ -18,6 +18,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import SignupCard from "./components/accounts/SignUp";
 import MyPage from "./components/accounts/MyPage";
+import PasswordFind from "./components/accounts/PasswordFind";
 
 export default function ScrollToTop() {
   const { pathname } = useLocation();
@@ -73,10 +74,11 @@ export const App = () => (
             />
             {/* 놀이터 */}
             <Route path="/lotto" element={<LotteryBox />} />
-            {/* 로그인 */}
+            {/* accounts */}
             <Route path="/login" element={<LoginComponent />} />
             <Route path="/signUp" element={<SignupCard />} />
-            <Route path="/Mypage" element={<MyPage />} />
+            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/passwordFind" element={<PasswordFind />} />
           </Routes>
 
           {/* 기타 컴포넌트들 */}

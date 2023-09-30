@@ -19,10 +19,10 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import userApi from "../../lib/api/userApi";
+import userApi, { ValidationError } from "../../lib/api/userApi";
 import { useNavigate, useLocation } from 'react-router-dom';
 
-function validateEmail(email: string) {
+export function validateEmail(email: string) {
   const regex = /\S+@\S+\.\S+/;
   return regex.test(email);
 }
@@ -122,11 +122,7 @@ export default function SignupCard() {
     }
   };
 
-  interface ValidationError {
-    // 닉네임 중복 체크에 사용
-    validation_fail: string;
-    error: string;
-  }
+  
   const handleNicknameDuplicationCheck = async () => {
     const { res, err } = await userApi.nickNameValidateReq(nickname);
 

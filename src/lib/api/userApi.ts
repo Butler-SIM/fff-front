@@ -299,9 +299,17 @@ export const verificationJoinEmailCode = async (code: string, email: string) => 
     .catch((err: AxiosError) => ({ res: null, err }));
 };
 
-export const updateResetPassword = async (email: string, password1: string, password2: string) => {
+export interface ValidationError {
+  // 닉네임 중복 체크에 사용
+  validation_fail: string;
+  error: string;
+  message : string;
+}
+
+//비밀번호 변경
+export const updateResetPassword = async (email: string, code:string, password1: string, password2: string) => {
   return axiosAuthApi
-    .put(`/user/password_reset`, { email, password1, password2 })
+    .post(`/accounts/password/change`, { email, code, password1, password2 })
     .then((res) => ({ res, err: null }))
     .catch((err: AxiosError) => ({ res: null, err }));
 };
