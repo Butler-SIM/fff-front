@@ -96,7 +96,7 @@ export default function LoginComponent() {
         >
           <Stack spacing={4}>
             <FormControl id="email">
-              <FormLabel>Email address</FormLabel>
+              <FormLabel>이메일</FormLabel>
               {/* Bind state variable and setter */}
               <Input
                 type="email"
@@ -105,7 +105,7 @@ export default function LoginComponent() {
               />
             </FormControl>
             <FormControl id="password">
-              <FormLabel>Password</FormLabel>
+              <FormLabel>비밀번호</FormLabel>
               {/* Bind state variable and setter */}
               <Input
                 type="password"
