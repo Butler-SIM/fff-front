@@ -9,6 +9,7 @@ import FreeBoard from "./FreeBoardList";
 import { timeFromNow } from "../../common";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { axiosAuthApi } from "../../lib/api/api";
 // Call it once in your app. At the root of your app is the best place
 
 const TextArea = ({
@@ -60,7 +61,7 @@ export function FreeBoardDetailItem() {
     }
     
     try {
-      await axios.put(`http://localhost:8000/free-board/${boardData.id}/recommend`);
+      await axiosAuthApi.put(`http://localhost:8000/free-board/${boardData.id}/recommend`);
       await setBoardData((prevState: any) => ({
         ...prevState,
         recommend: prevState.recommend + 1,
@@ -90,7 +91,7 @@ export function FreeBoardDetailItem() {
      }
   
      try{
-       await axios.put(`http://localhost:8000/free-board/${boardData.id}/not-recommend`);
+       await axiosAuthApi.put(`http://localhost:8000/free-board/${boardData.id}/not-recommend`);
        await setBoardData((prevState: any) => ({
          ...prevState,
          not_recommend: prevState.not_recommend + 1,

@@ -60,6 +60,7 @@ export default function CustomNav() {
   useEffect(() => {}, [authCtx.isLoggedIn]);
 
   const handleLogout = async () => {
+    localStorage.removeItem("userInfo");
     authCtx.setIsLoggedIn(false);
   };
 
