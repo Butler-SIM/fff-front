@@ -26,6 +26,33 @@ import { AxiosError } from "axios";
 import { axiosAuthApi } from "../../lib/api/api";
 import { getUserInfoByToken } from "../../lib/api/userApi";
 
+const NavDropdown = ({
+  name,
+  link,
+  items,
+}: {
+  name: string;
+  link: string;
+  items: { name: string; link: string }[];
+}) => {
+  return (
+    <Menu>
+      <MenuButton as={Button} variant="ghost" p={0}>
+        {name}
+      </MenuButton>
+      <MenuList>
+        {items.map((item, index) => (
+          <MenuItem key={index}>
+            <ChakraLink as={ReactRouterLink} to={item.link}>
+              {item.name}
+            </ChakraLink>
+          </MenuItem>
+        ))}
+      </MenuList>
+    </Menu>
+  );
+};
+
 interface Props {
   link: String;
 }
@@ -60,7 +87,6 @@ export default function CustomNav() {
   useEffect(() => {}, [authCtx.isLoggedIn]);
 
   const handleLogout = async () => {
-    localStorage.removeItem("userInfo");
     authCtx.setIsLoggedIn(false);
   };
 
@@ -104,7 +130,14 @@ export default function CustomNav() {
               <NavLink name={"익명"} link={"dd"}></NavLink>
               <NavLink name={"커뮤니티"} link={"dd"}></NavLink>
               <NavLink name={"놀이터"} link={"/lotto"}></NavLink>
-              <NavLink name={"기타"} link={"dd"}></NavLink>
+              <NavDropdown
+                name="기타"
+                link="#"
+                items={[
+                  { name: "버그제보", link: "/etc/bug" },
+                  { name: "건의/문의", link: "/etc/suggestions" },
+                ]}
+              />
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
@@ -134,7 +167,10 @@ export default function CustomNav() {
                 <MenuList fontSize={16}>
                   {/* 닉네임 */}
                   <MenuItem fontSize={13}>{userInfo?.nickname}</MenuItem>{" "}
-                  <MenuItem fontWeight={600}> <NavLink name={"마이페이지"} link={"/mypage"}></NavLink></MenuItem>
+                  <MenuItem fontWeight={600}>
+                    {" "}
+                    <NavLink name={"마이페이지"} link={"/mypage"}></NavLink>
+                  </MenuItem>
                   <MenuDivider />
                   <MenuItem fontWeight={600} onClick={handleLogout}>
                     로그아웃

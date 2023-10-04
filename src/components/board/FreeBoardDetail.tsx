@@ -9,7 +9,7 @@ import FreeBoard from "./FreeBoardList";
 import { timeFromNow } from "../../common";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { axiosAuthApi } from "../../lib/api/api";
+import { axiosApi, axiosAuthApi } from "../../lib/api/api";
 // Call it once in your app. At the root of your app is the best place
 
 const TextArea = ({
@@ -228,7 +228,7 @@ export function FreeBoardDetailComment() {
   const handleCommentSubmit = async () => {
     // 댓글 등록 처리 함수
     try {
-      await axios.post(`http://localhost:8000/free-board/comments/`, {
+      await axiosAuthApi.post(`http://localhost:8000/free-board/comments/`, {
         free_board: boardId,
         comment: commentText,
       });
@@ -263,14 +263,14 @@ export function FreeBoardDetailComment() {
 
   const fetchComments = async () => {
     try {
-      const response = await axios.get(
+      const response = await axiosApi.get(
         `http://localhost:8000/free-board/comments/?free_board_id=${boardId}`
       );
       setComments(response.data.results || []); // results 가 없으면 빈 배열 설정
     } catch (error) {
       console.error(error);
-      alert("댓글 등록에 실패하였습니다 잠시 후 다시 시도 해주세요");
-      setComments([]); // 에러 발생 시에도 comments를 빈 배열로 설정
+      
+      setComments([]); // 에러 발생 시에도 comments를 빈 배열로 설정a
     }
   };
 
