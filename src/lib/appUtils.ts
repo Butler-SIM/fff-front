@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { LoginUserInfo } from "./api/userApi";
+import { LoginUserInfo } from "./api/accounts/userApi";
 
 const kakaoChannelOpen = () => {
   if (navigator.userAgent.toLowerCase().indexOf("mobileapp") !== -1) {

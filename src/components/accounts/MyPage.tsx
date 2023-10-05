@@ -1,4 +1,4 @@
-'use client'
+//MyPage.tsx
 
 import {
   Button,
@@ -16,8 +16,21 @@ import {
   Center,
 } from '@chakra-ui/react'
 import { SmallCloseIcon } from '@chakra-ui/icons'
+import { useEffect, useState } from 'react';
+import { UserInfo, getUserInfoByToken } from '../../lib/api/accounts/userApi';
 
 export default function MyPage() {
+
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+
+    useEffect(() => {
+        getUserInfoByToken().then(({ res }) => {
+            if (res?.status === 200) {
+                setUserInfo(res.data);
+            }
+        });
+    }, []);
+
   return (
     <Flex
       minH={'100vh'}
@@ -40,7 +53,7 @@ export default function MyPage() {
           <FormLabel>User Icon</FormLabel>
           <Stack direction={['column', 'row']} spacing={6}>
             <Center>
-              <Avatar size="xl" src="https://bit.ly/sage-adebayo">
+              <Avatar size="xl" src={userInfo?.profile_image || "public/no_profile.png"}>
                 <AvatarBadge
                   as={IconButton}
                   size="sm"
@@ -53,36 +66,38 @@ export default function MyPage() {
               </Avatar>
             </Center>
             <Center w="full">
-              <Button w="full">Change Icon</Button>
+              <Button w="full">프로필 이미지 변경</Button>
             </Center>
           </Stack>
         </FormControl>
         <FormControl id="userName" isRequired>
-          <FormLabel>User name</FormLabel>
+          <FormLabel>닉네임</FormLabel>
           <Input
-            placeholder="UserName"
+            isDisabled
+            value={userInfo?.nickname || ''}
             _placeholder={{ color: 'gray.500' }}
             type="text"
           />
         </FormControl>
-        <FormControl id="email" isRequired>
-          <FormLabel>Email address</FormLabel>
+        {/* <FormControl id="email" isRequired>
+          <FormLabel>이메일</FormLabel>
           <Input
-            placeholder="your-email@example.com"
+          isDisabled
+          value={userInfo?.email || ''}
             _placeholder={{ color: 'gray.500' }}
             type="email"
           />
-        </FormControl>
-        <FormControl id="password" isRequired>
+        </FormControl> */}
+        {/* <FormControl id="password" isRequired>
           <FormLabel>Password</FormLabel>
           <Input
             placeholder="password"
             _placeholder={{ color: 'gray.500' }}
             type="password"
           />
-        </FormControl>
+        </FormControl> */}
         <Stack spacing={6} direction={['column', 'row']}>
-          <Button
+          {/* <Button
             bg={'red.400'}
             color={'white'}
             w="full"
@@ -99,7 +114,7 @@ export default function MyPage() {
               bg: 'blue.500',
             }}>
             Submit
-          </Button>
+          </Button> */}
         </Stack>
       </Stack>
     </Flex>

@@ -1,4 +1,5 @@
-"use client";
+
+//NavBar.tsx
 import React, { useState, useEffect, useContext } from "react";
 import {
   Box,
@@ -24,7 +25,7 @@ import { ColorModeSwitcher } from "../../ColorModeSwitcher";
 import { AuthContext, useAuth } from "./Auth/AuthContext";
 import { AxiosError } from "axios";
 import { axiosAuthApi } from "../../lib/api/api";
-import { getUserInfoByToken } from "../../lib/api/userApi";
+import { getUserInfoByToken } from "../../lib/api/accounts/userApi";
 import { useBreakpointValue } from "@chakra-ui/react";
 
 const NavDropdown = ({

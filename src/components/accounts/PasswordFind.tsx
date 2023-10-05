@@ -14,7 +14,7 @@ import {
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { validateEmail } from "./SignUp";
-import userApi, { ValidationError } from "../../lib/api/userApi";
+import userApi, { ValidationError } from "../../lib/api/accounts/userApi";
 
 type ForgotPasswordFormInputs = {
   email: string;

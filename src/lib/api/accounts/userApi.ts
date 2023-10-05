@@ -1,6 +1,6 @@
 //userApi.ts
 import { AxiosError } from 'axios';
-import { axiosAuthApi, axiosApi } from './api';
+import { axiosAuthApi, axiosApi } from '../api';
 
 
 const userInfoData = {

@@ -16,7 +16,7 @@ import {
 import { Link as ReactRouterLink, useNavigate } from "react-router-dom";
 import { Link as ChakraLink, LinkProps } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
-import userApi from "../../lib/api/userApi";
+import userApi from "../../lib/api/accounts/userApi";
 import appUtils from "../../lib/appUtils";
 import { AuthContext } from "../common/Auth/AuthContext";
 

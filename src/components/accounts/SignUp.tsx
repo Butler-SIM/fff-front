@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import userApi, { ValidationError } from "../../lib/api/userApi";
+import userApi, { ValidationError } from "../../lib/api/accounts/userApi";
 import { useNavigate, useLocation } from 'react-router-dom';
 
 export function validateEmail(email: string) {
