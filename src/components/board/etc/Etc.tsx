@@ -103,7 +103,7 @@ export function EtcBoardList(props: any) {
             <Tr key={item.id}>
               <Td>
                 <ChakraLink as={ReactRouterLink} to={`/etc/${props.categoryWriting}/${item.id}`}>
-                  <Text isTruncated maxWidth="130px">
+                  <Text>
                     {item.title}{" "}
                   </Text>
                 </ChakraLink>

@@ -68,7 +68,7 @@ export function EtcWritingComponent({ category, categoryWriting }: { category: s
           <Input
             type="text"
             name="title"
-            placeholder="제목을 입력해주세요."
+            placeholder="제목을 입력해주세요.(제목은50자를 넘을 수 없습니다.)"
             w="100%"
             h={50}
             mt={10}

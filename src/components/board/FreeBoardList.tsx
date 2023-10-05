@@ -102,7 +102,7 @@ export function FreeBoardList(props: any) {
               <Tr key={item.id}>
                 <Td>
                   <ChakraLink as={ReactRouterLink} to={`/free-board/detail/${item.id}`}>
-                    <Text isTruncated maxWidth="130px">
+                    <Text>
                       {item.title}{" "}
                       <Text as="span" color="red">
                         ({item.comment_count})

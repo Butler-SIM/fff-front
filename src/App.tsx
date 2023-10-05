@@ -56,7 +56,7 @@ export const App = () => (
       <ScrollToTop />
       <ChakraProvider theme={theme}>
         <AuthProvider>
-          <Box textAlign="center" fontSize="xl">
+          <Box textAlign="center" fontSize="xl" display="flex" flexDirection="column" minHeight="100vh">
             <CustomNav></CustomNav>
             <Routes>
               {/* 메인 페이지 */}
