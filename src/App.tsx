@@ -22,6 +22,9 @@ import EtcDetail from "./components/board/etc/EtcDetail";
 import store from "./store";
 import { Provider } from 'react-redux';
 import EtcBoard from "./components/board/etc/Etc";
+import HumorBoardDetail from "./components/board/HumorBoardDetail";
+import HumorBoard from "./components/board/HumorBoardList";
+import HumorWriting from "./components/writing/HumorWriting";
 
 export default function ScrollToTop() {
   const { pathname } = useLocation();
@@ -72,10 +75,21 @@ export const App = () => (
                 path="/free-board/detail/:Id"
                 element={<FreeBoardDetail />}
               />
+              {/* 유머 게시판 */}
+              <Route path="/humor-board" element={<HumorBoard />} />
+              {/* 유머 게시판 상세 */}
+              <Route
+                path="/humor-board/detail/:Id"
+                element={<HumorBoardDetail />}
+              />
               {/* 글쓰기 */}
               <Route
                 path="/free-board/writing"
                 element={<Writing category="자유" />}
+              />
+              <Route
+                path="/humor-board/writing"
+                element={<HumorWriting category="유머" />}
               />
               <Route
                 path="/etc-board/writing"

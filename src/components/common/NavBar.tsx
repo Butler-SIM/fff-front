@@ -25,6 +25,7 @@ import { AuthContext, useAuth } from "./Auth/AuthContext";
 import { AxiosError } from "axios";
 import { axiosAuthApi } from "../../lib/api/api";
 import { getUserInfoByToken } from "../../lib/api/userApi";
+import { useBreakpointValue } from "@chakra-ui/react";
 
 const NavDropdown = ({
   name,
@@ -35,18 +36,19 @@ const NavDropdown = ({
   link: string;
   items: { name: string; link: string }[];
 }) => {
+
+  const menuWidth = useBreakpointValue({ base: "390px", md: "auto" });
+
   return (
     <Menu>
       <MenuButton as={Button} variant="ghost" p={0}>
         {name}
       </MenuButton>
-      <MenuList>
+      <MenuList w={menuWidth}>
         {items.map((item, index) => (
-          <MenuItem key={index}>
-            <ChakraLink as={ReactRouterLink} to={item.link}>
-              {item.name}
-            </ChakraLink>
-          </MenuItem>
+          <ChakraLink as={ReactRouterLink} to={item.link}>
+            <MenuItem key={index}>{item.name}</MenuItem>
+          </ChakraLink>
         ))}
       </MenuList>
     </Menu>
@@ -127,7 +129,7 @@ export default function CustomNav() {
             >
               <NavLink name={"베스트"} link={"/board-list"}></NavLink>
               <NavLink name={"자유"} link={"/free-board"}></NavLink>
-              <NavLink name={"익명"} link={"dd"}></NavLink>
+              <NavLink name={"유머"} link={"/humor-board"}></NavLink>
               <NavLink name={"커뮤니티"} link={"dd"}></NavLink>
               <NavLink name={"놀이터"} link={"/lotto"}></NavLink>
               <NavDropdown
@@ -186,10 +188,19 @@ export default function CustomNav() {
             <Stack as={"nav"} spacing={4}>
               <NavLink name={"베스트"} link={"/board-list"}></NavLink>
               <NavLink name={"자유"} link={"/free-board"}></NavLink>
-              <NavLink name={"익명"} link={"dd"}></NavLink>
+              <NavLink name={"유머"} link={"/humor-board"}></NavLink>
               <NavLink name={"커뮤니티"} link={"dd"}></NavLink>
               <NavLink name={"놀이터"} link={"/lotto"}></NavLink>
-              <NavLink name={"기타"} link={"dd"}></NavLink>
+
+              {/* 기타 */}
+              <NavDropdown
+                name="기타"
+                link="#"
+                items={[
+                  { name: "버그제보", link: "/etc/bug" },
+                  { name: "건의/문의", link: "/etc/suggestions" },
+                ]}
+              />
             </Stack>
           </Box>
         ) : null}
